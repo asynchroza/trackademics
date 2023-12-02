@@ -20,7 +20,7 @@ const getControlButtonAnimationClassName = (state: FocusedState) => {
 export default function ControlButton({
   icon,
   href,
-  className,
+  className = "",
 }: {
   icon: React.ReactNode;
   href: string;
