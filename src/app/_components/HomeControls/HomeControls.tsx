@@ -3,7 +3,7 @@ import { NAVIGATION_PATHS } from "~/app/_constants/navigation";
 import { FaSquarePlus } from "react-icons/fa6";
 import { IoVideocam } from "react-icons/io5";
 
-const ICONS_SIZE = 64;
+const ICONS_SIZE = 80;
 
 export default function HomeControls() {
   return (
