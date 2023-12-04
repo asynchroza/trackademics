@@ -8,6 +8,7 @@ import { Icons } from "@/components/ui/icons";
 import { signIn } from "next-auth/react";
 import React, { type ChangeEvent } from "react";
 import { useRouter } from "next/navigation";
+import { NAVIGATION_PATHS } from "~/app/_constants/navigation";
 
 type LoginData = {
   id: string;
@@ -43,7 +44,7 @@ const Login = ({
     });
 
     if (!error) {
-      router.push("/dashboard");
+      router.push(NAVIGATION_PATHS.DASHBOARD_HOME);
     } else {
       // TODO: Display error
       setIsLoading(false);
@@ -59,7 +60,7 @@ const Login = ({
       {...props}
     > 
     {/* Add logo */}
-    <h1 className="pb-3">TEMPTALK</h1>
+    <h1 className="pb-3">TRACKADEMICS</h1>
       <form onSubmit={onSubmit}>
         <div className="grid gap-2 w-[20vw]">
           <div className="grid gap-1">
