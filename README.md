@@ -1,4 +1,4 @@
-# Memorable
+# Trackademics
 
 ## Prerequisites
 
@@ -21,26 +21,7 @@ After seeding the database, you may login using either [this account](https://gi
 
 ## Features
 
-### Networks
-
-Networks are invite-only systems that allow users to share reviews exclusively with people of their choice. When a network is loaded, the map will display only reviews permitted by the network. If the network is configured to load public reviews, it will showcase private network-only reviews alongside the public database of reviews.
-
-### Schema considerations
-
-```prisma
-model Review {
-    votes ?
-    comment String
-    images String[]  // urls to S3 bucket
-    ...
-}
-model Place {
-    latitude Float
-    Longtitude Float
-    ...
-}  // or Location
-model User {}
-```
+TBA
 
 ## Misc
 

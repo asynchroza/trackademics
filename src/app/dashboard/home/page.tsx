@@ -1,8 +1,3 @@
-import HomeControls from "~/app/_components/HomeControls/HomeControls";
-
 export default function Home() {
-  return (
-        <HomeControls />
-  );
+  return <h1>Home</h1>;
 }
-

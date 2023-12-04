@@ -1,6 +1,7 @@
-import Link from "next/link"
+import Link from "next/link";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
+import { NAVIGATION_PATHS } from "~/app/_constants/navigation";
 
 export function MainNavigation({
   className,
@@ -12,17 +13,17 @@ export function MainNavigation({
       {...props}
     >
       <Link
-        href="/dashboard/home"
+        href={NAVIGATION_PATHS.DASHBOARD_HOME}
         className="text-sm font-medium transition-colors hover:text-primary"
       >
         Home
       </Link>
       <Link
-        href="/dashboard/meetings"
+        href={NAVIGATION_PATHS.DASHBOARD_COURSES}
         className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
       >
-        Meetings
+        Courses
       </Link>
     </nav>
-  )
+  );
 }
