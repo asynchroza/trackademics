@@ -2,6 +2,23 @@ import { type Course, PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 try {
+
+    const testStudent = await prisma.user.upsert({
+        where: { email: 'studenttest@admin.com' },
+        update: {},
+        create: {
+            email: 'studenttest@admin.com',
+            name: 'Tony Soprano',
+            username: 'tonysoprano',
+            password: 'admin1234',
+            role: "Student"
+        },
+    })
+
+    if(!testStudent) {
+        throw new Error("Couldn't upsert test student");
+    }
+
     const superProfessor = await prisma.user.upsert({
         where: { email: 'professor@admin.com' },
         update: {},
@@ -44,7 +61,7 @@ try {
             },
             update: {
                 name: course.name,
-                description: course.name
+                description: course.description
             },
             create: {
                 id: course.id,
@@ -59,7 +76,7 @@ try {
 
     await Promise.all(promises);
 
-    console.log({ superProfessor })
+    console.log({ testStudent, superProfessor })
 } catch (error) {
     console.error(error)
     await prisma.$disconnect()
