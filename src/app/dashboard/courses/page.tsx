@@ -11,7 +11,6 @@ export default function Courses() {
 
 async function RenderCourses() {
   const courses = await api.course.getLatest.query();
-  console.log(courses);
 
   return (
     <div className="w-full max-w-xs">

@@ -20,14 +20,16 @@ try {
 
     const promises: Promise<unknown>[] = [];
 
-    type SeedCourse = Pick<Course, 'name' | 'description'>
+    type SeedCourse = Pick<Course, 'id' | 'name' | 'description'>
 
     const courseOne: SeedCourse = {
+        id: "COS101",
         name: "Fundamentals in Data Structures",
         description: "Basics of data structures",
     };
 
     const courseTwo: SeedCourse = {
+        id: "COS102",
         name: "Object Oriented Programming in Java",
         description: "Foundations in object oriented programming in Java"
     };
@@ -36,8 +38,16 @@ try {
         courseOne,
         courseTwo
     ].forEach((course: SeedCourse) => {
-        promises.push(prisma.course.create({
-            data: {
+        promises.push(prisma.course.upsert({
+            where: {
+                id: course.id
+            },
+            update: {
+                name: course.name,
+                description: course.name
+            },
+            create: {
+                id: course.id,
                 name: course.name,
                 description: course.description,
                 createdBy: {
