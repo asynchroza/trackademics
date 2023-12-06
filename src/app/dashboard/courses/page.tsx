@@ -6,13 +6,13 @@ import { SearchBar } from "~/app/_components/Common/SearchBar/SearchBar";
 import { api } from "~/trpc/react";
 
 export default function Courses() {
-  const {data} = api.course.getLatest.useQuery();
   const [filter, setFilter] = useState("");
+  const {data} = api.course.getFilteredCourses.useQuery({filter});
 
   return (
     <div>
       <SearchBar setFilter={setFilter} />
-      <RenderCourses courses={data?.filter((course) => course.name.includes(filter) || course.description.includes(filter) || course.id.includes(filter))}/>
+      <RenderCourses courses={data}/>
     </div>
   );
 }
@@ -27,7 +27,7 @@ function RenderCourses({courses}: {courses?: Course[]}) {
               <p>{course.description}</p>
             </div>
           ))
-        : null}
+        : <h1>LOADING</h1>}
     </div>
   );
 }
