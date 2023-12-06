@@ -1,40 +1,54 @@
-import { PrismaClient } from '@prisma/client'
+import { type Course, PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 try {
-    const superAdmin = await prisma.user.upsert({
-        where: { email: 'superadmin@admin.com' },
+    const superProfessor = await prisma.user.upsert({
+        where: { email: 'professor@admin.com' },
         update: {},
         create: {
-            email: 'superadmin@admin.com',
-            name: 'Super Admin',
-            username: 'superadmin',
-            password: 'admin1234'
+            email: 'professor@admin.com',
+            name: 'Prof. Snape',
+            username: 'profsnape',
+            password: 'admin1234',
+            role: "Professor",
         },
     })
 
-    if (!superAdmin) {
-        throw new Error("Couldn't upsert super user");
+    if (!superProfessor) {
+        throw new Error("Couldn't upsert super professor");
     }
 
     const promises: Promise<unknown>[] = [];
 
+    type SeedCourse = Pick<Course, 'name' | 'description'>
+
+    const courseOne: SeedCourse = {
+        name: "Fundamentals in Data Structures",
+        description: "Basics of data structures",
+    };
+
+    const courseTwo: SeedCourse = {
+        name: "Object Oriented Programming in Java",
+        description: "Foundations in object oriented programming in Java"
+    };
+
     [
-        "Nice cuisine. Loved the atmosphere!",
-        "I'm surely bringing my children here! No doubt about it!",
-        "I've had better! Ravioli were blah."
-    ].forEach((comment, id) => {
-        promises.push(prisma.review.upsert({
+        courseOne,
+        courseTwo
+    ].forEach((course: SeedCourse, id) => {
+        promises.push(prisma.course.upsert({
             where: {
                 id
             },
             update: {
-                comment
+                name: course.name,
+                description: course.name
             },
             create: {
-                comment,
+                name: course.name,
+                description: course.name,
                 createdBy: {
-                    connect: { id: superAdmin.id }
+                    connect: { id: superProfessor.id }
                 }
             },
         }))
@@ -42,7 +56,7 @@ try {
 
     await Promise.all(promises);
 
-    console.log({ superAdmin })
+    console.log({ superProfessor })
 } catch (error) {
     console.error(error)
     await prisma.$disconnect()
