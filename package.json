@@ -14,10 +14,14 @@
     "postinstall": "prisma generate",
     "lint": "next lint",
     "start": "next start",
-    "shadcn:add": "bunx shadcn-ui@latest add"
+    "shadcn:add": "bunx shadcn-ui@latest add",
+    "prepare": "husky install"
   },
   "prisma": {
     "seed": "bun prisma/utils/seed.ts"
+  },
+  "lint-staged": {
+    "*.ts*": "prettier --write"
   },
   "dependencies": {
     "@next-auth/prisma-adapter": "^1.0.7",
@@ -56,6 +60,8 @@
     "autoprefixer": "^10.4.14",
     "eslint": "^8.47.0",
     "eslint-config-next": "^14.0.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^15.2.0",
     "postcss": "^8.4.27",
     "prettier": "^3.0.0",
     "prettier-plugin-tailwindcss": "^0.5.1",
