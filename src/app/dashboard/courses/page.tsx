@@ -8,7 +8,7 @@ import { api } from "~/trpc/react";
 export default function Courses() {
   const [filter, setFilter] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const {data} = api.course.getFilteredCourses.useQuery({filter, page: currentPage, pageSize: 1});
+  const {data} = api.course.getFilteredCourses.useQuery({filter, page: currentPage});
 
   return (
     <div>

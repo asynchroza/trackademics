@@ -12,15 +12,15 @@ export const courseRouter = createTRPCRouter({
       pageSize: z.number().optional()
     })
   ).query(({ ctx, input }) => {
+    const mode = "insensitive"
     const { filter, page = 1, pageSize = 10 } = input;
     const skip = (page - 1) * pageSize;
 
     return ctx.db.course.findMany({
       where: {
         OR: [
-          { name: { contains: filter } },
-          { description: { contains: filter } },
-          { id: { contains: filter } }
+          { name: { contains: filter, mode } },
+          { id: { contains: filter, mode } }
         ]
       },
       skip,
