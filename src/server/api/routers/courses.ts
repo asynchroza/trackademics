@@ -1,13 +1,11 @@
-import { z } from "zod";
-
 import {
   createTRPCRouter,
   protectedProcedure,
 } from "~/server/api/trpc";
 
-export const reviewRouter = createTRPCRouter({
+export const courseRouter = createTRPCRouter({
   getLatest: protectedProcedure.query(({ ctx }) => {
-    return ctx.db.review.findMany({
+    return ctx.db.course.findMany({
       orderBy: { createdAt: "desc" },
       where: { createdBy: { id: ctx.session.user.id } },
     });

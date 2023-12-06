@@ -35,18 +35,11 @@ try {
     [
         courseOne,
         courseTwo
-    ].forEach((course: SeedCourse, id) => {
-        promises.push(prisma.course.upsert({
-            where: {
-                id
-            },
-            update: {
+    ].forEach((course: SeedCourse) => {
+        promises.push(prisma.course.create({
+            data: {
                 name: course.name,
-                description: course.name
-            },
-            create: {
-                name: course.name,
-                description: course.name,
+                description: course.description,
                 createdBy: {
                     connect: { id: superProfessor.id }
                 }
