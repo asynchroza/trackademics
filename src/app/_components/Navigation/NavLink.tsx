@@ -7,12 +7,12 @@ export default function NavLink({
   children,
   href,
   path,
-  router
+  router,
 }: {
   children: React.ReactNode;
   href: string;
   path: string;
-  router: AppRouterInstance
+  router: AppRouterInstance;
 }) {
   const changeLocation = () => {
     router.push(href);
@@ -26,7 +26,7 @@ export default function NavLink({
   return (
     <div
       className={cn(
-        `text-sm font-medium transition-colors hover:text-primary`,
+        `cursor-pointer text-sm font-medium transition-colors hover:text-primary`,
         muteForeground(),
       )}
       onClick={changeLocation}

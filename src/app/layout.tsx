@@ -11,8 +11,8 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "TempTalk",
-  description: "Quickly hop on an online call",
+  title: "Trackademics",
+  description: "Quick access to your university audit",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
