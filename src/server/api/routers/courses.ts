@@ -5,8 +5,16 @@ import {
 } from "~/server/api/trpc";
 
 export const courseRouter = createTRPCRouter({
-  getFilteredCourses: protectedProcedure.input(z.object({ filter: z.string() })).query(({ ctx, input }) => {
-    const { filter } = input;
+  getFilteredCourses: protectedProcedure.input(
+    z.object({
+      filter: z.string(),
+      page: z.number().optional(),
+      pageSize: z.number().optional()
+    })
+  ).query(({ ctx, input }) => {
+    const { filter, page = 1, pageSize = 10 } = input;
+    const skip = (page - 1) * pageSize;
+
     return ctx.db.course.findMany({
       where: {
         OR: [
@@ -14,7 +22,9 @@ export const courseRouter = createTRPCRouter({
           { description: { contains: filter } },
           { id: { contains: filter } }
         ]
-      }
+      },
+      skip,
+      take: pageSize
     })
   })
 });

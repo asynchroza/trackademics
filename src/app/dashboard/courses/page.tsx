@@ -7,12 +7,14 @@ import { api } from "~/trpc/react";
 
 export default function Courses() {
   const [filter, setFilter] = useState("");
-  const {data} = api.course.getFilteredCourses.useQuery({filter});
+  const [currentPage, setCurrentPage] = useState(1);
+  const {data} = api.course.getFilteredCourses.useQuery({filter, page: currentPage, pageSize: 1});
 
   return (
     <div>
       <SearchBar setFilter={setFilter} />
       <RenderCourses courses={data}/>
+      <div onClick={() => setCurrentPage(state => state + 1)}>Next</div>
     </div>
   );
 }
