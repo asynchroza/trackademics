@@ -4,6 +4,7 @@ import { type Course } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { SearchBar } from "~/app/_components/Common/SearchBar/SearchBar";
 import { CourseBox } from "~/app/_components/Course/CourseBox";
+import LoadingSpinner from "~/app/_components/Icons/LoadingSpinner";
 import { api } from "~/trpc/react";
 
 export default function Courses() {
@@ -63,11 +64,11 @@ function RenderCourses({
   return (
     <div className="grid h-[60vh] grid-cols-3">
       {loading ? (
-        <h1>LOADING</h1>
+        <LoadingSpinner />
       ) : courses && courses?.length > 0 ? (
         courses.map((course) => <CourseBox course={course} key={course.id} />)
       ) : (
-        <h1>NO RESULTS</h1>
+        <p>No courses were found</p>
       )}
     </div>
   );

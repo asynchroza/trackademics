@@ -17,6 +17,13 @@ export function SearchBar({
     setLoading(true);
     clearTimeout(debouncer);
 
+    if (e.target.value.length === 0) {
+      // do not debounce if input is deleted
+      setFilter(e.target.value);
+      setLoading(false);
+      return;
+    }
+
     debouncer = setTimeout(() => {
       setFilter(e.target.value);
       setLoading(false);
