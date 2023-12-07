@@ -8,10 +8,12 @@ import { api } from "~/trpc/react";
 export default function Courses() {
   const [filter, setFilter] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 5;
+
   const { data } = api.course.getFilteredCourses.useQuery({
     filter,
     page: currentPage,
-    pageSize: 5,
+    pageSize,
   });
 
   return (
@@ -20,13 +22,17 @@ export default function Courses() {
       <RenderCourses courses={data} />
       <div
         className="bg-white"
-        onClick={() => setCurrentPage((state) => state - 1)}
+        onClick={() =>
+          setCurrentPage((state) => (state > 1 ? state - 1 : state))
+        }
       >
         Back
       </div>
       <div
         className="bg-white"
-        onClick={() => setCurrentPage((state) => state + 1)}
+        onClick={() =>
+          setCurrentPage((state) => (data?.length === 5 ? state + 1 : state))
+        }
       >
         Next
       </div>
