@@ -17,8 +17,6 @@
 - `bun db:studio` to easily inspect the state of the database
 - `bun dev` to start development server
 
-After seeding the database, you may login using either [this account](https://github.com/hoxhaava/memorable/blob/9e4e3284e58c587a96298322531ca4168043a58c/prisma/seed.ts#L11C1-L11C1) or Discord.
-
 ## Features
 
 TBA
