@@ -10,6 +10,7 @@
     "db:seed": "bunx prisma db seed",
     "db:bash": "docker exec -it memorable-db-1 /bin/bash",
     "db:drop": "bun ./prisma/utils/dropDb.ts",
+    "db:format": "bun prisma format",
     "dev": "next dev --port 6969",
     "postinstall": "prisma generate",
     "lint": "next lint",

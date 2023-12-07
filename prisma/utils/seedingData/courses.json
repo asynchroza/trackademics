@@ -1,0 +1,87 @@
+[
+    {
+        "id": "COS101",
+        "name": "Fundamentals in Data Structures",
+        "description": "Teaching the foundations of data structures in the programming language C++"
+      },
+      {
+        "id": "COS102",
+        "name": "OOP Programming in Java",
+        "description": "Foundations in object-oriented programming taught in Java"
+      },
+      {
+        "id": "COS103",
+        "name": "Database Management Systems",
+        "description": "Introduction to the design and implementation of database systems"
+      },
+      {
+        "id": "COS104",
+        "name": "Software Engineering Principles",
+        "description": "Exploring principles and practices of software engineering"
+      },
+      {
+        "id": "MAT201",
+        "name": "Advanced Mathematics",
+        "description": "Higher-level mathematical concepts and problem-solving"
+      },
+      {
+        "id": "PHY301",
+        "name": "Quantum Mechanics",
+        "description": "Study of quantum mechanics in physics"
+      },
+      {
+        "id": "ENG401",
+        "name": "Technical Writing",
+        "description": "Developing effective technical writing skills for professionals"
+      },
+      {
+        "id": "CHEM501",
+        "name": "Organic Chemistry",
+        "description": "Exploring the principles and reactions of organic compounds"
+      },
+      {
+        "id": "COS202",
+        "name": "Web Development",
+        "description": "Building dynamic and responsive web applications"
+      },
+      {
+        "id": "BUS301",
+        "name": "Entrepreneurship",
+        "description": "Fundamentals of entrepreneurship and business development"
+      },
+      {
+        "id": "SOC101",
+        "name": "Introduction to Sociology",
+        "description": "Exploring the basic concepts and theories in sociology"
+      },
+      {
+        "id": "PSYCH201",
+        "name": "Cognitive Psychology",
+        "description": "Understanding the processes of human cognition and mental functions"
+      },
+      {
+        "id": "ART301",
+        "name": "Art History",
+        "description": "Surveying the history of art and artistic movements"
+      },
+      {
+        "id": "MUS101",
+        "name": "Music Theory",
+        "description": "Understanding the fundamentals of music theory"
+      },
+      {
+        "id": "EDU401",
+        "name": "Educational Psychology",
+        "description": "Examining psychological principles applied to education"
+      },
+      {
+        "id": "HIST202",
+        "name": "World History",
+        "description": "Exploring major events and developments in world history"
+      },
+      {
+        "id": "LANG401",
+        "name": "Advanced Linguistics",
+        "description": "Study of advanced topics in linguistics and language theory"
+      }
+]

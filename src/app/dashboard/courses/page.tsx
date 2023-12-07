@@ -11,13 +11,25 @@ export default function Courses() {
   const { data } = api.course.getFilteredCourses.useQuery({
     filter,
     page: currentPage,
+    pageSize: 5,
   });
 
   return (
-    <div>
+    <div className="h-[60vh] w-[30vw]">
       <SearchBar setFilter={setFilter} />
       <RenderCourses courses={data} />
-      <div onClick={() => setCurrentPage((state) => state + 1)}>Next</div>
+      <div
+        className="bg-white"
+        onClick={() => setCurrentPage((state) => state - 1)}
+      >
+        Back
+      </div>
+      <div
+        className="bg-white"
+        onClick={() => setCurrentPage((state) => state + 1)}
+      >
+        Next
+      </div>
     </div>
   );
 }
@@ -27,9 +39,9 @@ function RenderCourses({ courses }: { courses?: Course[] }) {
     <div className="w-full max-w-xs">
       {courses ? (
         courses.map((course) => (
-          <div key={course.id}>
-            <p>{course.name}</p>
-            <p>{course.description}</p>
+          <div className="m-2" key={course.id}>
+            <p>name: {course.name}</p>
+            <p>description: {course.description}</p>
           </div>
         ))
       ) : (
