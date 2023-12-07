@@ -3,12 +3,13 @@
 import { type Course } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { SearchBar } from "~/app/_components/Common/SearchBar/SearchBar";
+import { CourseBox } from "~/app/_components/Course/CourseBox";
 import { api } from "~/trpc/react";
 
 export default function Courses() {
   const [filter, setFilter] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 5;
+  const pageSize = 9;
 
   const { data, isLoading } = api.course.getFilteredCourses.useQuery({
     filter,
@@ -23,21 +24,21 @@ export default function Courses() {
   }, [filter]);
 
   return (
-    <div className="h-[60vh] w-[30vw]">
+    <div className="w-4/5">
       <SearchBar setFilter={setFilter} />
       <RenderCourses courses={data} loading={isLoading} />
       <div
         className="bg-white"
-        onClick={() =>
-          setCurrentPage((state) => (state > 1 ? state - 1 : state))
-        }
+        onClick={() => setCurrentPage((state) => (state > 1 ? state - 1 : 1))}
       >
         Back
       </div>
       <div
         className="bg-white"
         onClick={() =>
-          setCurrentPage((state) => (data?.length === 5 ? state + 1 : state))
+          setCurrentPage((state) =>
+            data?.length === pageSize ? state + 1 : state,
+          )
         }
       >
         Next
@@ -54,14 +55,9 @@ function RenderCourses({
   courses?: Course[];
 }) {
   return (
-    <div className="w-full max-w-xs">
+    <div className="grid grid-cols-3">
       {courses && courses?.length > 0 ? (
-        courses.map((course) => (
-          <div className="m-2" key={course.id}>
-            <p>name: {course.name}</p>
-            <p>description: {course.description}</p>
-          </div>
-        ))
+        courses.map((course) => <CourseBox course={course} key={course.id} />)
       ) : loading ? (
         <h1>LOADING</h1>
       ) : (
