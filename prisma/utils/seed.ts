@@ -17,6 +17,8 @@ try {
     create: {
       id: "aubg",
       name: "American University in Bulgaria",
+      image:
+        "https://studyqa.com/storage/media/upload/univers/717/1/uni_profile_7171.jpg",
     },
   });
 

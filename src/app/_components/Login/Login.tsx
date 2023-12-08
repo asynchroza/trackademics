@@ -9,6 +9,8 @@ import { signIn } from "next-auth/react";
 import React, { type ChangeEvent } from "react";
 import { useRouter } from "next/navigation";
 import { NAVIGATION_PATHS } from "~/app/_constants/navigation";
+import { type Organization } from "@prisma/client";
+import Image from "next/image";
 
 type LoginData = {
   id: string;
@@ -17,10 +19,10 @@ type LoginData = {
 
 const Login = ({
   className = "",
-  organizationName,
+  organization,
 }: {
   className?: string;
-  organizationName: string;
+  organization: Organization;
 }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -61,8 +63,8 @@ const Login = ({
         className,
       )}
     >
-      {/* Add logo */}
-      <h1 className="pb-3">TA: {organizationName}</h1>
+      <Image src={organization.image} alt="" width={50} height={50} />
+      <h1 className="pb-3">TA: {organization.name}</h1>
       <form onSubmit={onSubmit}>
         <div className="grid w-[20vw] gap-2">
           <div className="grid gap-1">

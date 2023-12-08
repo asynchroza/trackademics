@@ -2,6 +2,7 @@ import { getServerAuthSession } from "~/server/auth";
 import { MainNavigation } from "./MainNavigation";
 import ClientSideSessionWrapper from "~/app/_components/Utilities/ClientSideSessionWrapper";
 import { UserNavigation } from "./UserNavigation";
+import { NavLogo } from "./NavLogo";
 
 export default async function Navigation() {
   const session = await getServerAuthSession();
@@ -13,7 +14,8 @@ export default async function Navigation() {
           <MainNavigation className="mx-6" />
           <div className="ml-auto flex items-center space-x-4">
             <ClientSideSessionWrapper session={session}>
-              <UserNavigation/>
+              <NavLogo />
+              <UserNavigation />
             </ClientSideSessionWrapper>
           </div>
         </div>

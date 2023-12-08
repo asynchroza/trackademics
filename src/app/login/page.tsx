@@ -30,5 +30,5 @@ export default async function Home() {
     redirect(NAVIGATION_PATHS.DASHBOARD_HOME);
   }
 
-  return <Login organizationName={organization.name} />;
+  return <Login organization={organization} />;
 }
