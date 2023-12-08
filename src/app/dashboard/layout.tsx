@@ -24,6 +24,11 @@ export default async function DashboardLayout({
   } else if (
     session.user.organizationId !== getFirstSubdomainFromHeaders(headers)
   ) {
+    console.log(
+      "HERE",
+      session.user.organizationId,
+      getFirstSubdomainFromHeaders(headers),
+    );
     // TODO: Make sure this works as expected when database has another seeded organization
     redirect(NAVIGATION_PATHS.LANDING_PAGE);
   }
