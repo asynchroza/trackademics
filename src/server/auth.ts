@@ -81,6 +81,10 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
   callbacks: {
+    redirect: async ({ url }) => {
+      // keep this callback, otherwise logout always resolves to NEXTAUTH_URL
+      return Promise.resolve(url);
+    },
     jwt: async ({ token, user }) => {
       if (user) {
         token.username = user.username;
