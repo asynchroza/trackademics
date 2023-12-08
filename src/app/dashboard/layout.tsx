@@ -13,6 +13,10 @@ export default async function DashboardLayout({
   const session = await getServerAuthSession();
   const headers = getHeaders();
 
+  /*
+    This branched conditional statement handles the logic for allowing only
+    authenticated organization users to access the dashboards
+  */
   if (!session) {
     // should pass the referred query so that user can be redirected back to page they were trying to access
     // /api/auth/signin?referred=dashboard

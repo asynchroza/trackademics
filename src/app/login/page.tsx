@@ -15,6 +15,10 @@ export default async function Home() {
     id: organizationId,
   });
 
+  /*
+    - do not allow authenticated users from other organizations to access this page
+    - do not allow wildcard subdomains to access this page (e.g. inexistent organizations)
+  */
   if (
     !organization ||
     (session && organization.id !== session?.user.organizationId)
