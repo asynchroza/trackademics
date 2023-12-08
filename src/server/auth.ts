@@ -1,34 +1,36 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { type
-  DefaultSession,
+import {
+  type DefaultSession,
   getServerSession,
   type NextAuthOptions,
 } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import DiscordProvider from 'next-auth/providers/discord';
+import DiscordProvider from "next-auth/providers/discord";
 
 // TODO: Extend JWT and Session to include the user's unique ID
-declare module 'next-auth/jwt' {
+declare module "next-auth/jwt" {
   interface JWT {
-    username: string
-    id: string
+    username: string;
+    id: string;
+    organizationId: string;
   }
 }
 
-declare module 'next-auth' {
+declare module "next-auth" {
   interface Session {
     user: {
-      username: string
-      id: string
-    } & DefaultSession["user"]
+      username: string;
+      id: string;
+      organizationId: string;
+    } & DefaultSession["user"];
   }
 
   interface User {
-    username: string
-    id: string
+    username: string;
+    id: string;
+    organizationId: string;
   }
 }
-
 
 import { env } from "~/env.mjs";
 import { db } from "~/server/db";
@@ -36,33 +38,37 @@ import { db } from "~/server/db";
 const providers = [];
 
 if (env.DISCORD_CLIENT_ID && env.DISCORD_CLIENT_SECRET) {
-  providers.push(DiscordProvider({
-    clientId: env.DISCORD_CLIENT_ID,
-    clientSecret: env.DISCORD_CLIENT_SECRET,
-  }));
+  providers.push(
+    DiscordProvider({
+      clientId: env.DISCORD_CLIENT_ID,
+      clientSecret: env.DISCORD_CLIENT_SECRET,
+    }),
+  );
 }
 
-providers.push(CredentialsProvider({
-  name: 'password',
-  credentials: {
-    username: { label: 'Username', type: 'text' },
-    password: { label: 'Password', type: 'password' }
-  },
-  async authorize(credentials) {
-    const user = await db.user.findUnique({
-      where: {
-        username: credentials?.username
+providers.push(
+  CredentialsProvider({
+    name: "password",
+    credentials: {
+      username: { label: "Username", type: "text" },
+      password: { label: "Password", type: "password" },
+    },
+    async authorize(credentials) {
+      const user = await db.user.findUnique({
+        where: {
+          username: credentials?.username,
+        },
+      });
+
+      // TODO: Password should be stored as hash
+      if (user && user.password == credentials?.password) {
+        return user;
       }
-    })
 
-    // TODO: Password should be stored as hash
-    if (user && user.password == credentials?.password) {
-      return user;
-    }
-
-    return null;
-  }
-}))
+      return null;
+    },
+  }),
+);
 
 /**
  * Options for NextAuth.js used to configure adapters, providers, callbacks, etc.
@@ -79,6 +85,7 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         token.username = user.username;
         token.id = user.id;
+        token.organizationId = user.organizationId;
       }
       return Promise.resolve(token);
     },
@@ -88,11 +95,12 @@ export const authOptions: NextAuthOptions = {
         session.user.email = token.email;
         session.user.name = token.name;
         session.user.id = token.id;
+        session.user.organizationId = token.organizationId;
       }
 
       // session.user.image = token.user.image;
       return Promise.resolve(session);
-    }
+    },
   },
   adapter: PrismaAdapter(db),
   providers,
