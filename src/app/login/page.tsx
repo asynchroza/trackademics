@@ -17,7 +17,7 @@ export default async function Home() {
 
   if (!organization) {
     // redirect with a search param to trigger a toast saying "Organization not found"
-    redirect(NAVIGATION_PATHS.LANDING_PAGE);
+    redirect(`${NAVIGATION_PATHS.LANDING_PAGE}?err=Organization wasn't found`);
   }
 
   if (session) {
