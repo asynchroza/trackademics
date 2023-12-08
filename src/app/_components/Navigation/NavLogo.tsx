@@ -1,21 +1,14 @@
-"use client";
-
-import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { api } from "~/trpc/react";
+import { getServerAuthSession } from "~/server/auth";
 
-export const NavLogo = () => {
-  // TODO: Convert to server side component
-  const { data: session } = useSession();
-  const { data: organization } = api.organization.getOrganization.useQuery({
-    id: session?.user.organizationId ?? "",
-  });
+export const NavLogo = async () => {
+  const session = await getServerAuthSession();
 
-  if (organization?.image) {
+  if (session?.user.organizationImage) {
     return (
       <Image
-        src={organization.image}
-        alt="Organization Logo"
+        src={session.user.organizationImage}
+        alt={`Organization logo`}
         width={30}
         height={30}
       />

@@ -13,8 +13,8 @@ export default async function Navigation() {
         <div className="flex h-16 items-center px-4">
           <MainNavigation className="mx-6" />
           <div className="ml-auto flex items-center space-x-4">
+            <NavLogo />
             <ClientSideSessionWrapper session={session}>
-              <NavLogo />
               <UserNavigation />
             </ClientSideSessionWrapper>
           </div>

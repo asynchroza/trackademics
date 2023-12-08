@@ -13,6 +13,7 @@ declare module "next-auth/jwt" {
     username: string;
     id: string;
     organizationId: string;
+    organizationImage: string;
   }
 }
 
@@ -22,6 +23,7 @@ declare module "next-auth" {
       username: string;
       id: string;
       organizationId: string;
+      organizationImage: string;
     } & DefaultSession["user"];
   }
 
@@ -87,9 +89,19 @@ export const authOptions: NextAuthOptions = {
     },
     jwt: async ({ token, user }) => {
       if (user) {
+        const organization = await db.organization.findUnique({
+          where: {
+            id: user.organizationId,
+          },
+          select: {
+            image: true,
+          },
+        });
+
         token.username = user.username;
         token.id = user.id;
         token.organizationId = user.organizationId;
+        token.organizationImage = organization?.image ?? "";
       }
       return Promise.resolve(token);
     },
@@ -100,6 +112,7 @@ export const authOptions: NextAuthOptions = {
         session.user.name = token.name;
         session.user.id = token.id;
         session.user.organizationId = token.organizationId;
+        session.user.organizationImage = token.organizationImage;
       }
 
       // session.user.image = token.user.image;
