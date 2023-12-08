@@ -11,6 +11,15 @@ const getRandomIndex = <T>(arr: T[]) => {
 };
 
 try {
+  const organization = await prisma.organization.upsert({
+    where: { id: "aubg" },
+    update: {},
+    create: {
+      id: "aubg",
+      name: "American University in Bulgaria",
+    },
+  });
+
   const testStudent = await prisma.user.upsert({
     where: { email: "studenttest@admin.com" },
     update: {},
@@ -20,6 +29,7 @@ try {
       username: "tonysoprano",
       password: "admin1234",
       role: "Student",
+      organizationId: organization.id,
     },
   });
 
@@ -37,6 +47,7 @@ try {
         username: "profsnape",
         password: "admin1234",
         role: "Professor",
+        organization: { connect: { id: organization.id } },
       },
     }),
     await prisma.user.upsert({
@@ -48,6 +59,9 @@ try {
         username: "bozhilov14",
         password: "admin1234",
         role: "Professor",
+        organization: {
+          connect: { id: organization.id },
+        },
       },
     }),
     await prisma.user.upsert({
@@ -59,6 +73,9 @@ try {
         username: "sony14",
         password: "admin1234",
         role: "Professor",
+        organization: {
+          connect: { id: organization.id },
+        },
       },
     }),
   ];
@@ -84,6 +101,9 @@ try {
           description: course.description,
           taughtBy: {
             connect: { id: getRandomIndex<User>(professorResult)!.id },
+          },
+          organization: {
+            connect: { id: organization.id },
           },
         },
       }),

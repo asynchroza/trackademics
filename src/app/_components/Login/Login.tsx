@@ -16,9 +16,12 @@ type LoginData = {
 };
 
 const Login = ({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLDivElement>) => {
+  className = "",
+  organizationName,
+}: {
+  className?: string;
+  organizationName: string;
+}) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [formData, setFormData] = React.useState<LoginData>({
@@ -57,12 +60,11 @@ const Login = ({
         "flex min-h-screen flex-col items-center justify-center bg-gray-100 p-8",
         className,
       )}
-      {...props}
-    > 
-    {/* Add logo */}
-    <h1 className="pb-3">TRACKADEMICS</h1>
+    >
+      {/* Add logo */}
+      <h1 className="pb-3">TA: {organizationName}</h1>
       <form onSubmit={onSubmit}>
-        <div className="grid gap-2 w-[20vw]">
+        <div className="grid w-[20vw] gap-2">
           <div className="grid gap-1">
             <Label className="sr-only" htmlFor="email">
               Email or Username
