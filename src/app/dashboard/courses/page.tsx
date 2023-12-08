@@ -26,14 +26,10 @@ export default function Courses() {
     setCurrentPage(1);
   }, [filter]);
 
-  useEffect(() => {
-    setLoading(isRequestLoading);
-  }, [isRequestLoading]);
-
   return (
     <div className="w-4/5">
       <SearchBar setFilter={setFilter} setLoading={setLoading} />
-      <RenderCourses courses={data} loading={loading} />
+      <RenderCourses courses={data} loading={loading || isRequestLoading} />
       <div
         className="bg-white"
         onClick={() => setCurrentPage((state) => (state > 1 ? state - 1 : 1))}

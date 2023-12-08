@@ -1,6 +1,11 @@
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import type { Dispatch, SetStateAction, ChangeEvent } from "react";
+import {
+  type Dispatch,
+  type SetStateAction,
+  type ChangeEvent,
+  useState,
+} from "react";
 
 export function SearchBar({
   className = "",
@@ -11,7 +16,7 @@ export function SearchBar({
   setFilter: Dispatch<SetStateAction<string>>;
   setLoading: Dispatch<SetStateAction<boolean>>;
 }) {
-  let debouncer: NodeJS.Timeout;
+  const [debouncer, setDebouncer] = useState<NodeJS.Timeout>();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setLoading(true);
@@ -24,10 +29,12 @@ export function SearchBar({
       return;
     }
 
-    debouncer = setTimeout(() => {
-      setFilter(e.target.value);
-      setLoading(false);
-    }, 800);
+    setDebouncer(
+      setTimeout(() => {
+        setFilter(e.target.value);
+        setLoading(false);
+      }, 800),
+    );
   };
 
   return (
