@@ -2,7 +2,6 @@ import { redirect } from "next/navigation";
 import { getServerAuthSession } from "~/server/auth";
 import Navigation from "../_components/Navigation/Navigation";
 import { NAVIGATION_PATHS } from "../_constants/navigation";
-import { headers as getHeaders } from "next/headers";
 import { getFirstSubdomainFromHeaders } from "~/app/_utils/url";
 
 export default async function DashboardLayout({
@@ -11,7 +10,6 @@ export default async function DashboardLayout({
   children: React.ReactNode;
 }) {
   const session = await getServerAuthSession();
-  const headers = getHeaders();
 
   /*
     This branched conditional statement handles the logic for allowing only
@@ -21,13 +19,11 @@ export default async function DashboardLayout({
     // should pass the referred query so that user can be redirected back to page they were trying to access
     // /api/auth/signin?referred=dashboard
     redirect(NAVIGATION_PATHS.LOGIN);
-  } else if (
-    session.user.organizationId !== getFirstSubdomainFromHeaders(headers)
-  ) {
+  } else if (session.user.organizationId !== getFirstSubdomainFromHeaders()) {
     console.log(
       "HERE",
       session.user.organizationId,
-      getFirstSubdomainFromHeaders(headers),
+      getFirstSubdomainFromHeaders(),
     );
     // TODO: Make sure this works as expected when database has another seeded organization
     redirect(NAVIGATION_PATHS.LANDING_PAGE);

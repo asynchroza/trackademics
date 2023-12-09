@@ -6,6 +6,7 @@ import {
 } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import DiscordProvider from "next-auth/providers/discord";
+import { getFirstSubdomainFromHeaders } from "~/app/_utils/url";
 
 // TODO: Extend JWT and Session to include the user's unique ID
 declare module "next-auth/jwt" {
@@ -63,7 +64,11 @@ providers.push(
       });
 
       // TODO: Password should be stored as hash
-      if (user && user.password == credentials?.password) {
+      if (
+        user &&
+        user.password == credentials?.password &&
+        user.organizationId === getFirstSubdomainFromHeaders()
+      ) {
         return user;
       }
 

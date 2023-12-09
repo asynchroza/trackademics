@@ -33,4 +33,18 @@ export const courseRouter = createTRPCRouter({
         take: pageSize,
       });
     }),
+  getUserCourses: protectedProcedure.query(({ ctx }) => {
+    return ctx.db.user.findUnique({
+      where: {
+        id: ctx.session.user.id,
+      },
+      select: {
+        enrolledCourses: {
+          select: {
+            course: true,
+          },
+        },
+      },
+    });
+  }),
 });

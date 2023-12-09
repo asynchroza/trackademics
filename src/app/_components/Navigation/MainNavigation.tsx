@@ -40,6 +40,13 @@ export function MainNavigation({
         Courses
       </NavLink>
       <NavLink
+        href={NAVIGATION_PATHS.DASHBOARD_SCHEDULE}
+        path={path}
+        router={router}
+      >
+        Schedule
+      </NavLink>
+      <NavLink
         href={NAVIGATION_PATHS.NOT_YET_IMPLEMENTED}
         path={path}
         router={router}
