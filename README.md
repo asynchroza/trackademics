@@ -17,6 +17,10 @@
 - `bun db:studio` to easily inspect the state of the database
 - `bun dev` to start development server
 
+## Useful commands
+
+- `bun shadcn:add <component-name>` - pull [shadcn components](https://ui.shadcn.com/docs/installation/next) (use `bunx` instead of `npx`)
+
 ## Features
 
 TBA
@@ -29,5 +33,4 @@ Either run `bun db:drop` or follow the instructions below:
 
 - `bun db:bash` to get into the container's shell
 - `psql -U dev -d dev_db` to log into the default database
-- run `DROP DATABASE IF EXISTS memorable_db;` to drop the memorable database
-
+- run `DROP DATABASE IF EXISTS trackademics;` to drop the memorable database
