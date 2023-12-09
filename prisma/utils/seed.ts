@@ -1,5 +1,10 @@
-import { type Course, PrismaClient, type User } from "@prisma/client";
-import courses from "./seedingData/courses.json";
+import {
+  type Course,
+  PrismaClient,
+  type User,
+  type UserRole,
+} from "@prisma/client";
+import organizations from "./seedingData/organizations.json";
 const prisma = new PrismaClient();
 
 const getRandomIndex = <T>(arr: T[]) => {
@@ -10,111 +15,128 @@ const getRandomIndex = <T>(arr: T[]) => {
   return arr[Math.floor(Math.random() * arr.length)];
 };
 
-try {
-  const organization = await prisma.organization.upsert({
-    where: { id: "aubg" },
-    update: {},
-    create: {
-      id: "aubg",
-      name: "American University in Bulgaria",
-      image:
-        "https://studyqa.com/storage/media/upload/univers/717/1/uni_profile_7171.jpg",
-    },
-  });
-
-  const testStudent = await prisma.user.upsert({
-    where: { email: "studenttest@admin.com" },
-    update: {},
-    create: {
-      email: "studenttest@admin.com",
-      name: "Tony Soprano",
-      username: "tonysoprano",
-      password: "admin1234",
-      role: "Student",
-      organizationId: organization.id,
-    },
-  });
-
-  if (!testStudent) {
-    throw new Error("Couldn't upsert test student");
+const generateRandomList = <T>(n: number, arr: T[]): T[] => {
+  if (n <= 0) {
+    throw new Error("List size must be greater than 0");
   }
 
-  const promisesProfessors = [
-    await prisma.user.upsert({
-      where: { email: "snape@admin.com" },
-      update: {},
-      create: {
-        email: "snape@admin.com",
-        name: "Snape",
-        username: "profsnape",
-        password: "admin1234",
-        role: "Professor",
-        organization: { connect: { id: organization.id } },
-      },
-    }),
-    await prisma.user.upsert({
-      where: { email: "bozhilov@admin.com" },
-      update: {},
-      create: {
-        email: "bozhilov@admin.com",
-        name: "Michael Bozhilov",
-        username: "bozhilov14",
-        password: "admin1234",
-        role: "Professor",
-        organization: {
-          connect: { id: organization.id },
-        },
-      },
-    }),
-    await prisma.user.upsert({
-      where: { email: "sony@admin.com" },
-      update: {},
-      create: {
-        email: "sony@admin.com",
-        name: "Sony",
-        username: "sony14",
-        password: "admin1234",
-        role: "Professor",
-        organization: {
-          connect: { id: organization.id },
-        },
-      },
-    }),
-  ];
+  const uniqueValues = new Set<T>();
+  const result: T[] = [];
 
-  const professorResult = await Promise.all(promisesProfessors);
+  while (result.length < n) {
+    const value = getRandomIndex<T>(arr);
 
-  type SeedCourse = Pick<Course, "id" | "name" | "description">;
-  const coursePromises: Promise<unknown>[] = [];
+    if (!value) throw new Error("Cannot generate random list");
+    if (!uniqueValues.has(value)) {
+      uniqueValues.add(value);
+      result.push(value);
+    }
+  }
 
-  courses.forEach((course: SeedCourse) => {
-    coursePromises.push(
-      prisma.course.upsert({
-        where: {
-          id: course.id,
-        },
-        update: {
-          name: course.name,
-          description: course.description,
-        },
-        create: {
-          id: course.id,
-          name: course.name,
-          description: course.description,
-          taughtBy: {
-            connect: { id: getRandomIndex<User>(professorResult)!.id },
+  return result;
+};
+
+try {
+  const promise: Promise<unknown>[] = [];
+  organizations.forEach((org) => {
+    promise.push(
+      (async () => {
+        await prisma.organization.upsert({
+          where: { id: org.id },
+          update: {},
+          create: {
+            id: org.id,
+            name: org.name,
+            image: org.image,
           },
-          organization: {
-            connect: { id: organization.id },
-          },
-        },
-      }),
+        });
+
+        const professorPromises: Promise<User>[] = [];
+
+        org.professors.forEach((prof) =>
+          professorPromises.push(
+            prisma.user.upsert({
+              where: { username: prof.username },
+              update: {},
+              create: {
+                name: prof.name,
+                username: prof.username,
+                password: prof.password,
+                role: prof.role as UserRole,
+                email: prof.email,
+                organization: { connect: { id: org.id } },
+              },
+            }),
+          ),
+        );
+
+        const professors = await Promise.all(professorPromises);
+
+        const coursePromises: Promise<Course>[] = [];
+        org.courses.forEach((course) => {
+          coursePromises.push(
+            prisma.course.upsert({
+              where: {
+                codeName_organizationId: {
+                  codeName: course.codeName,
+                  organizationId: org.id,
+                },
+              },
+              update: {},
+              create: {
+                codeName: course.codeName,
+                name: course.name,
+                description: course.description,
+                taughtBy: {
+                  connect: { id: getRandomIndex<User>(professors)!.id },
+                },
+                organization: {
+                  connect: { id: org.id },
+                },
+              },
+            }),
+          );
+        });
+
+        const courses = await Promise.all(coursePromises);
+
+        const studentPromises: Promise<User>[] = [];
+
+        org.students.forEach((student) => {
+          const randomCourses = generateRandomList<Course>(5, courses);
+
+          studentPromises.push(
+            prisma.user.upsert({
+              where: { username: student.username },
+              update: {},
+              create: {
+                name: student.name,
+                username: student.username,
+                password: student.password,
+                email: student.email,
+                role: student.role as UserRole,
+                organization: { connect: { id: org.id } },
+                enrolledCourses: {
+                  connectOrCreate: randomCourses.map((course) => ({
+                    where: { id: course.id },
+                    create: {
+                      course: {
+                        connect: { id: course.id },
+                      },
+                    },
+                  })),
+                },
+              },
+            }),
+          );
+        });
+
+        await Promise.all(studentPromises);
+      })(),
     );
   });
 
-  const courseResult = await Promise.all(coursePromises);
-
-  console.log({ professorResult, courseResult });
+  await Promise.all(promise);
 } catch (error) {
   console.error(error);
   await prisma.$disconnect().catch(async (e) => {
