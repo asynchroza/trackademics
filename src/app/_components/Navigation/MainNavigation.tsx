@@ -26,7 +26,7 @@ export function MainNavigation({
         Home
       </NavLink>
       <NavLink
-        href={NAVIGATION_PATHS.NOT_YET_IMPLEMENTED}
+        href={NAVIGATION_PATHS.DASHBOARD_SCHEDULE}
         path={path}
         router={router}
       >
@@ -38,13 +38,6 @@ export function MainNavigation({
         router={router}
       >
         Courses
-      </NavLink>
-      <NavLink
-        href={NAVIGATION_PATHS.DASHBOARD_SCHEDULE}
-        path={path}
-        router={router}
-      >
-        Schedule
       </NavLink>
       <NavLink
         href={NAVIGATION_PATHS.NOT_YET_IMPLEMENTED}

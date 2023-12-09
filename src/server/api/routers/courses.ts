@@ -44,6 +44,7 @@ export const courseRouter = createTRPCRouter({
             course: true,
           },
         },
+        taughtCourses: true,
       },
     });
   }),
