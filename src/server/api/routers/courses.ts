@@ -23,6 +23,11 @@ export const courseRouter = createTRPCRouter({
             },
             { id: { contains: filter, mode: PRISMA_FILTER_MODES.INSENSITIVE } },
           ],
+          AND: [
+            {
+              organizationId: { equals: ctx.session.user.organizationId },
+            },
+          ],
         },
         skip,
         take: pageSize,
