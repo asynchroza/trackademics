@@ -1,0 +1,120 @@
+{
+  "name": "Business Administration",
+  "foundationalCourses": [
+    {
+      "codeName": "BUS1001",
+      "name": "Management in Global Environment",
+      "description": ""
+    },
+    {
+      "codeName": "BUS2001",
+      "name": "Management Information Systems",
+      "description": ""
+    },
+    {
+      "codeName": "BUS2020",
+      "name": "Financial Accounting",
+      "description": ""
+    },
+    {
+      "codeName": "BUS2021",
+      "name": "Managerial Accounting",
+      "description": ""
+    },
+    {
+      "codeName": "BUS2060",
+      "name": "Marketing",
+      "description": ""
+    },
+    {
+      "codeName": "BUS3000",
+      "name": "Business Ethics (WIC)",
+      "description": ""
+    },
+    {
+      "codeName": "BUS3030",
+      "name": "Corporate Finance I",
+      "description": ""
+    },
+    {
+      "codeName": "BUS3040",
+      "name": "Organizational Theory and Behaviour",
+      "description": ""
+    },
+    {
+      "codeName": "BUS4048",
+      "name": "Strategic Management",
+      "description": ""
+    }
+  ],
+  "electiveGroups": [
+    {
+      "name": "Non-BUS electives",
+      "requiredCredits": 3,
+      "required": false,
+      "electiveCourses": [
+        {
+          "codeName": "EUR3003",
+          "name": "Policy and Policy-Making in the EU (WIC)",
+          "description": ""
+        },
+        {
+          "codeName": "EUR3020",
+          "name": "Internal Market and EU Competition Law",
+          "description": ""
+        },
+        {
+          "codeName": "JMC2070",
+          "name": "Digital Storytelling",
+          "description": ""
+        },
+        {
+          "codeName": "JMC3070",
+          "name": "Public Relations Fundamentals",
+          "description": ""
+        },
+        {
+          "codeName": "JMC3089",
+          "name": "Advertising Fundamentals",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "name": "Accounting Concentration",
+      "requiredCredits": 12,
+      "electiveRules": [
+        {
+          "name": "Topics in Accounting Practice",
+          "regex": "BUS4[4-9][0-9]{2}"
+        },
+        {
+          "name": "Topics in Accounting",
+          "regex": "BUS4[4-9][0-9]{2}"
+        }
+      ],
+      "requiredCourses": [
+        {
+          "codeName": "BUS2020",
+          "name": "Financial Accounting",
+          "description": ""
+        },
+        {
+          "codeName": "BUS2021",
+          "name": "Managerial Accounting",
+          "description": ""
+        }
+      ],
+      "electiveCourses": [
+        {
+          "codeName": "BUS3020",
+          "name": "Intermediate Accounting I"
+        },
+        {
+          "codeName": "BUS3020",
+          "name": "Intermediate Accounting II"
+        }
+      ]
+    }
+  ]
+}

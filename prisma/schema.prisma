@@ -12,23 +12,50 @@ enum UserRole {
   Professor
 }
 
+model CourseSelectionRule {
+  id              String         @id @default(cuid())
+  name            String
+  regex           String
+  ElectiveGroup   ElectiveGroup? @relation(fields: [electiveGroupId], references: [id])
+  electiveGroupId String?
+}
+
+model SelectedElectiveCourse {
+  id                      String         @id @default(cuid())
+  course                  Course         @relation(fields: [courseId], references: [id])
+  courseId                String
+  requiredElectiveGroup   ElectiveGroup? @relation("RequiredCourse", fields: [requiredElectiveGroupId], references: [id])
+  requiredElectiveGroupId String?
+  electiveGroup           ElectiveGroup? @relation("ElectiveCourse", fields: [electiveGroupId], references: [id])
+  electiveGroupId         String?
+}
+
 model ElectiveGroup {
-  id            String   @id @default(cuid())
-  courses       Course[] @relation()
-  Program       Program? @relation(fields: [programId], references: [id])
-  programId     String?
-  selectionRule String // filter for courses which are not explicitly added
+  id              String                   @id @default(cuid())
+  name            String
+  requiredCredits Int
+  requiredCourses SelectedElectiveCourse[] @relation("RequiredCourse")
+  electiveCourses SelectedElectiveCourse[] @relation("ElectiveCourse")
+  rules           CourseSelectionRule[]
+  program         Program?                 @relation(fields: [programId], references: [id])
+  focus           String
+  programId       String?
+  selectionRule   String // filter for courses which are not explicitly added
+  electiveGroupId String?
 }
 
 model GeneralEducationGroup {
-  id        String   @id @default(cuid())
-  Program   Program? @relation(fields: [programId], references: [id])
-  programId String?
+  id              String   @id @default(cuid())
+  program         Program? @relation(fields: [programId], references: [id])
+  requiredCredits Int
+  programId       String?
 }
 
 model Program {
   id                     String                  @id @default(cuid())
   name                   String
+  focus                  String[]
+  requiredCredits        Int
   foundationalCourses    Course[]                @relation()
   electiveGroups         ElectiveGroup[]         @relation()
   generalEducationGroups GeneralEducationGroup[] @relation()
@@ -59,21 +86,21 @@ model User {
 }
 
 model Course {
-  id               String         @id @default(cuid())
+  id               String                   @id @default(cuid())
   codeName         String
   name             String
   description      String
-  createdAt        DateTime       @default(now())
-  updatedAt        DateTime       @updatedAt
-  taughtBy         User           @relation("TaughtBy", fields: [taughtById], references: [id])
+  credits          Int
+  createdAt        DateTime                 @default(now())
+  updatedAt        DateTime                 @updatedAt
+  taughtBy         User                     @relation("TaughtBy", fields: [taughtById], references: [id])
   taughtById       String
-  organization     Organization   @relation(fields: [organizationId], references: [id])
+  organization     Organization             @relation(fields: [organizationId], references: [id])
   organizationId   String
   enrolledStudents Enrollment[]
-  Program          Program?       @relation(fields: [programId], references: [id])
+  program          Program?                 @relation(fields: [programId], references: [id])
   programId        String?
-  ElectiveGroup    ElectiveGroup? @relation(fields: [electiveGroupId], references: [id])
-  electiveGroupId  String?
+  courseElectives  SelectedElectiveCourse[]
 
   @@unique([codeName, organizationId])
 }
