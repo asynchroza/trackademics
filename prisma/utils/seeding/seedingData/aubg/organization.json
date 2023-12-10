@@ -103,19 +103,23 @@
     },
     {
       "codeName": "BUS3020",
-      "name": "Intermediate Accounting I"
+      "name": "Intermediate Accounting I",
+      "description": ""
     },
     {
       "codeName": "BUS3020",
-      "name": "Intermediate Accounting II"
+      "name": "Intermediate Accounting II",
+      "description": ""
     },
     {
       "codeName": "BUS4700",
-      "name": "Topic: Money Launderings"
+      "name": "Topic: Money Launderings",
+      "description": ""
     },
     {
       "codeName": "BUS4800",
-      "name": "Topic: Cryptocurrency Accounting"
+      "name": "Topic: Cryptocurrency Accounting",
+      "description": ""
     }
   ]
 }

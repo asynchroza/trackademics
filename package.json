@@ -9,7 +9,7 @@
     "db:studio": "prisma studio",
     "db:seed": "bunx prisma db seed",
     "db:bash": "docker exec -it memorable-db-1 /bin/bash",
-    "db:drop": "bun ./prisma/utils/dropDb.ts",
+    "db:drop": "bun ./prisma/utils/database/dropDb.ts",
     "db:format": "bun prisma format",
     "dev": "next dev --port 6969",
     "postinstall": "prisma generate",
@@ -19,7 +19,7 @@
     "prepare": "husky install"
   },
   "prisma": {
-    "seed": "bun prisma/utils/seed.ts"
+    "seed": "bun prisma/utils/seeding/seed.ts"
   },
   "lint-staged": {
     "*.ts*": "prettier --write"
