@@ -47,13 +47,6 @@ model ElectiveGroup {
   @@unique([name, programId])
 }
 
-model GeneralEducationGroup {
-  id              String   @id @default(cuid())
-  program         Program? @relation(fields: [programId], references: [id])
-  requiredCredits Int
-  programId       String?
-}
-
 model Program {
   id                     String                  @id @default(cuid())
   name                   String
@@ -61,7 +54,6 @@ model Program {
   requiredCredits        Int
   foundationalCourses    Course[]                @relation()
   electiveGroups         ElectiveGroup[]         @relation()
-  generalEducationGroups GeneralEducationGroup[] @relation()
   Organization           Organization            @relation(fields: [organizationId], references: [id])
   organizationId         String
 
