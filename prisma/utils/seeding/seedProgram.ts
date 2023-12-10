@@ -1,14 +1,5 @@
-// TODO: seedProgram.ts should export a function which will seed a program
-// e.g seedProgram(prisma, aubgBusAdministration, "aubg")
-
-import {
-  Course,
-  Program,
-  type PrismaClient,
-  ElectiveGroup,
-} from "@prisma/client";
+import { type PrismaClient, type ElectiveGroup } from "@prisma/client";
 import type program from "./seedingData/aubg/programs/business_administration.json";
-import { connect } from "http2";
 
 export const seedProgram = async (
   prisma: PrismaClient,
@@ -55,6 +46,8 @@ export const seedProgram = async (
         },
       },
     });
+
+    console.log({ foundationalCourses });
 
     const electiveGroupsPromises: Promise<ElectiveGroup>[] = [];
 
