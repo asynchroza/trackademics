@@ -38,8 +38,10 @@ model ElectiveGroup {
   requiredCourses SelectedElectiveCourse[] @relation("RequiredCourse")
   electiveCourses SelectedElectiveCourse[] @relation("ElectiveCourse")
   rules           CourseSelectionRule[]
-  program         Program?                 @relation(fields: [programId], references: [id])
-  programId       String?
+  program         Program                  @relation(fields: [programId], references: [id])
+  // program         Program[]                 @relation(fields: [programId], references: [id])
+  // focus           String[]  // before creating the group, you have to check whether the focus exists as a definition in the program
+  programId       String
   electiveGroupId String?
 
   @@unique([name, programId])
@@ -60,7 +62,7 @@ model Program {
   foundationalCourses    Course[]                @relation()
   electiveGroups         ElectiveGroup[]         @relation()
   generalEducationGroups GeneralEducationGroup[] @relation()
-  Organization           Organization           @relation(fields: [organizationId], references: [id])
+  Organization           Organization            @relation(fields: [organizationId], references: [id])
   organizationId         String
 
   @@unique([name, organizationId])
