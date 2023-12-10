@@ -1,0 +1,128 @@
+{
+  "id": "xyzuni",
+  "name": "XYZ University",
+  "image": "https://marketplace.canva.com/EAFMljXC558/1/0/1600w/canva-blue-gold-elegant-clean-badge-university-logo-gAsDf5t6ewg.jpg",
+  "professors": [
+    {
+      "email": "mcgonagall@xyzuni.com",
+      "name": "Minerva McGonagall",
+      "username": "profmcgonagall",
+      "password": "admin1234",
+      "organizationId": "xyzuni",
+      "role": "Professor"
+    },
+    {
+      "email": "lupin@xyzuni.com",
+      "name": "Remus Lupin",
+      "username": "proflupin",
+      "password": "admin1234",
+      "organizationId": "xyzuni",
+      "role": "Professor"
+    }
+  ],
+  "students": [
+    {
+      "email": "hermionegranger@xyzuni.com",
+      "name": "Hermione Granger",
+      "username": "hgranger",
+      "password": "admin1234",
+      "organizationId": "xyzuni",
+      "role": "Student"
+    },
+    {
+      "email": "ronweasley@xyzuni.com",
+      "name": "Ron Weasley",
+      "username": "rweasley",
+      "password": "admin1234",
+      "organizationId": "xyzuni",
+      "role": "Student"
+    }
+  ],
+  "courses": [
+    {
+      "codeName": "CS101",
+      "name": "Introduction to Computer Science",
+      "description": "Basic concepts and programming fundamentals"
+    },
+    {
+      "codeName": "CS102",
+      "name": "Data Structures and Algorithms",
+      "description": "Advanced data structures and algorithm design"
+    },
+    {
+      "codeName": "CS103",
+      "name": "Databases and SQL",
+      "description": "Introduction to database systems and SQL"
+    },
+    {
+      "codeName": "CS104",
+      "name": "Software Development Practices",
+      "description": "Best practices in software development"
+    },
+    {
+      "codeName": "MATH201",
+      "name": "Linear Algebra",
+      "description": "Study of linear algebraic systems and applications"
+    },
+    {
+      "codeName": "PHYS301",
+      "name": "Astrophysics",
+      "description": "Exploring the principles of astrophysics"
+    },
+    {
+      "codeName": "ENG401",
+      "name": "Creative Writing",
+      "description": "Developing creative writing skills and storytelling"
+    },
+    {
+      "codeName": "CHEM501",
+      "name": "Inorganic Chemistry",
+      "description": "Understanding the principles of inorganic chemistry"
+    },
+    {
+      "codeName": "CS202",
+      "name": "Web Development",
+      "description": "Creating dynamic and interactive web applications"
+    },
+    {
+      "codeName": "BUS301",
+      "name": "Business Ethics",
+      "description": "Exploring ethical conscodeNameerations in business practices"
+    },
+    {
+      "codeName": "SOC101",
+      "name": "Introduction to Anthropology",
+      "description": "Study of human societies and cultures"
+    },
+    {
+      "codeName": "PSYCH201",
+      "name": "Developmental Psychology",
+      "description": "Understanding human psychological development"
+    },
+    {
+      "codeName": "ART301",
+      "name": "Modern Art",
+      "description": "Exploring modern art movements and styles"
+    },
+    {
+      "codeName": "MUS101",
+      "name": "Music Composition",
+      "description": "Principles of music composition and theory"
+    },
+    {
+      "codeName": "EDU401",
+      "name": "Educational Technology",
+      "description": "Integration of technology in education"
+    },
+    {
+      "codeName": "HIST202",
+      "name": "Ancient History",
+      "description": "Study of major events in ancient history"
+    },
+    {
+      "codeName": "LANG401",
+      "name": "Computational Linguistics",
+      "description": "Application of computational methods in linguistics"
+    }
+  ]
+}

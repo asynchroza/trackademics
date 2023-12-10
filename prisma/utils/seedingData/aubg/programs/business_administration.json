@@ -51,7 +51,6 @@
     {
       "name": "Non-BUS electives",
       "requiredCredits": 3,
-      "required": false,
       "electiveCourses": [
         {
           "codeName": "EUR3003",

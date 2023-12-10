@@ -1,0 +1,121 @@
+{
+  "id": "aubg",
+  "name": "American University in Bulgaria",
+  "image": "https://studyqa.com/storage/media/upload/univers/717/1/uni_profile_7171.jpg",
+  "professors": [
+    {
+      "email": "snape@aubg.com",
+      "name": "Snape",
+      "username": "profsnape",
+      "password": "admin1234",
+      "organizationId": "aubg",
+      "role": "Professor"
+    },
+    {
+      "email": "dumbledore@aubg.com",
+      "name": "Albus Dumbledore",
+      "username": "profdumbledore",
+      "password": "admin1234",
+      "organizationId": "aubg",
+      "role": "Professor"
+    }
+  ],
+  "students": [
+    {
+      "email": "sonysoprano@aubg.com",
+      "name": "Sony Toni Soprano",
+      "username": "sts200",
+      "password": "admin1234",
+      "organizationId": "aubg",
+      "role": "Student"
+    }
+  ],
+  "courses": [
+    {
+      "codeName": "BUS1001",
+      "name": "Management in Global Environment",
+      "description": ""
+    },
+    {
+      "codeName": "BUS2001",
+      "name": "Management Information Systems",
+      "description": ""
+    },
+    {
+      "codeName": "BUS2020",
+      "name": "Financial Accounting",
+      "description": ""
+    },
+    {
+      "codeName": "BUS2021",
+      "name": "Managerial Accounting",
+      "description": ""
+    },
+    {
+      "codeName": "BUS2060",
+      "name": "Marketing",
+      "description": ""
+    },
+    {
+      "codeName": "BUS3000",
+      "name": "Business Ethics (WIC)",
+      "description": ""
+    },
+    {
+      "codeName": "BUS3030",
+      "name": "Corporate Finance I",
+      "description": ""
+    },
+    {
+      "codeName": "BUS3040",
+      "name": "Organizational Theory and Behaviour",
+      "description": ""
+    },
+    {
+      "codeName": "BUS4048",
+      "name": "Strategic Management",
+      "description": ""
+    },
+    {
+      "codeName": "EUR3003",
+      "name": "Policy and Policy-Making in the EU (WIC)",
+      "description": ""
+    },
+    {
+      "codeName": "EUR3020",
+      "name": "Internal Market and EU Competition Law",
+      "description": ""
+    },
+    {
+      "codeName": "JMC2070",
+      "name": "Digital Storytelling",
+      "description": ""
+    },
+    {
+      "codeName": "JMC3070",
+      "name": "Public Relations Fundamentals",
+      "description": ""
+    },
+    {
+      "codeName": "JMC3089",
+      "name": "Advertising Fundamentals",
+      "description": ""
+    },
+    {
+      "codeName": "BUS3020",
+      "name": "Intermediate Accounting I"
+    },
+    {
+      "codeName": "BUS3020",
+      "name": "Intermediate Accounting II"
+    },
+    {
+      "codeName": "BUS4700",
+      "name": "Topic: Money Launderings"
+    },
+    {
+      "codeName": "BUS4800",
+      "name": "Topic: Cryptocurrency Accounting"
+    }
+  ]
+}
