@@ -95,6 +95,18 @@ export const seedProgram = async (
                   },
                 }
               : {}),
+            ...(group.electiveRules
+              ? {
+                  rules: {
+                    createMany: {
+                      data: group.electiveRules.map((rule) => ({
+                        regex: rule.regex,
+                        name: rule.name,
+                      })),
+                    },
+                  },
+                }
+              : {}),
           },
         }),
       );
