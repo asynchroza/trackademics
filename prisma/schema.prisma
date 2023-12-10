@@ -1,22 +1,37 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
-  // NOTE: When using mysql or sqlserver, uncomment the @db.Text annotations in model Account below
-  // Further reading:
-  // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
-  // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
   url      = env("DATABASE_URL")
 }
 
 enum UserRole {
   Student
   Professor
+}
+
+model ElectiveGroup {
+  id            String   @id @default(cuid())
+  courses       Course[] @relation()
+  Program       Program? @relation(fields: [programId], references: [id])
+  programId     String?
+  selectionRule String // filter for courses which are not explicitly added
+}
+
+model GeneralEducationGroup {
+  id        String   @id @default(cuid())
+  Program   Program? @relation(fields: [programId], references: [id])
+  programId String?
+}
+
+model Program {
+  id                     String                  @id @default(cuid())
+  name                   String
+  foundationalCourses    Course[]                @relation()
+  electiveGroups         ElectiveGroup[]         @relation()
+  generalEducationGroups GeneralEducationGroup[] @relation()
 }
 
 model Enrollment {
@@ -44,17 +59,21 @@ model User {
 }
 
 model Course {
-  id               String       @id @default(cuid())
+  id               String         @id @default(cuid())
   codeName         String
   name             String
   description      String
-  createdAt        DateTime     @default(now())
-  updatedAt        DateTime     @updatedAt
-  taughtBy         User         @relation("TaughtBy", fields: [taughtById], references: [id])
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  taughtBy         User           @relation("TaughtBy", fields: [taughtById], references: [id])
   taughtById       String
-  organization     Organization @relation(fields: [organizationId], references: [id])
+  organization     Organization   @relation(fields: [organizationId], references: [id])
   organizationId   String
   enrolledStudents Enrollment[]
+  Program          Program?       @relation(fields: [programId], references: [id])
+  programId        String?
+  ElectiveGroup    ElectiveGroup? @relation(fields: [electiveGroupId], references: [id])
+  electiveGroupId  String?
 
   @@unique([codeName, organizationId])
 }
