@@ -17,6 +17,11 @@ export default async function Courses() {
 
   if (!courses) return <h1>User is not signed up for any classes!</h1>;
 
+  const something = await api.program.getProgram.query({
+    name: "Business Administration",
+  });
+  console.log(something);
+
   return (
     <div className="w-4/5">
       {courses.map((course) => (

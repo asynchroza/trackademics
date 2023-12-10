@@ -113,6 +113,10 @@ export const seedProgram = async (
     });
 
     const electiveCourses = await Promise.all(electiveGroupsPromises);
+    console.log({ electiveCourses });
+
+    // TODO: Bind elective groups to program
+    // TODO: Give elective groups focus[]: -> you will be able to attach general education electives to be global by giving it focus "all"
 
     console.log({ electiveCourses });
   } catch (error) {
