@@ -60,8 +60,8 @@ model Program {
   foundationalCourses    Course[]                @relation()
   electiveGroups         ElectiveGroup[]         @relation()
   generalEducationGroups GeneralEducationGroup[] @relation()
-  Organization           Organization?           @relation(fields: [organizationId], references: [id])
-  organizationId         String?
+  Organization           Organization           @relation(fields: [organizationId], references: [id])
+  organizationId         String
 
   @@unique([name, organizationId])
 }

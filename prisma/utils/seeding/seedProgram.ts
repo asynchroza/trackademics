@@ -108,10 +108,21 @@ export const seedProgram = async (
     const electiveCourses = await Promise.all(electiveGroupsPromises);
     console.log({ electiveCourses });
 
-    // TODO: Bind elective groups to program
-    // TODO: Give elective groups focus[]: -> you will be able to attach general education electives to be global by giving it focus "all"
+    await prisma.program.update({
+      where: {
+        name_organizationId: {
+          name: program.name,
+          organizationId: org,
+        },
+      },
+      data: {
+        electiveGroups: {
+          connect: electiveCourses.map((course) => ({ id: course.id })),
+        },
+      },
+    });
 
-    console.log({ electiveCourses });
+    // TODO: Give elective groups focus[]
   } catch (error) {
     console.error(error);
     await prisma.$disconnect().catch(async (e) => {
