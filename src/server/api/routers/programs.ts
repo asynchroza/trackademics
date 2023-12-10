@@ -1,3 +1,4 @@
+import { rules } from ".eslintrc.cjs";
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
@@ -20,7 +21,14 @@ export const programRouter = createTRPCRouter({
         select: {
           requiredCredits: true,
           foundationalCourses: true,
-          electiveGroups: true,
+          electiveGroups: {
+            select: {
+              requiredCredits: true,
+              electiveCourses: true,
+              requiredCourses: true,
+              rules: true,
+            },
+          },
         },
       });
     }),
