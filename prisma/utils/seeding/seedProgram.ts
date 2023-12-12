@@ -49,16 +49,14 @@ export const seedProgram = async (
 
     console.log({ foundationalCourses });
 
+    // SEED ELECTIVE GROUPS
     const electiveGroupsPromises: Promise<ElectiveGroup>[] = [];
 
     prog.electiveGroups.forEach((group) => {
       electiveGroupsPromises.push(
         prisma.electiveGroup.upsert({
           where: {
-            name_programId: {
-              name: group.name,
-              programId: program.id,
-            },
+            name: group.name,
           },
           update: {},
           create: {
@@ -121,8 +119,6 @@ export const seedProgram = async (
         },
       },
     });
-
-    // TODO: Give elective groups focus[]
   } catch (error) {
     console.error(error);
     await prisma.$disconnect().catch(async (e) => {
