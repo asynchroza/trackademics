@@ -7,7 +7,7 @@
     "db:start": "docker-compose -f ./prisma/docker/postgres.compose.dev.yaml up",
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
-    "db:seed": "bunx prisma db seed",
+    "db:seed": "bun db:drop && bun db:push && bunx prisma db seed",
     "db:bash": "docker exec -it memorable-db-1 /bin/bash",
     "db:drop": "bun ./prisma/utils/database/dropDb.ts",
     "db:format": "bun prisma format",
