@@ -57,9 +57,12 @@ providers.push(
       password: { label: "Password", type: "password" },
     },
     async authorize(credentials) {
-      const user = await db.user.findUnique({
+      const user = await db.user.findFirst({
         where: {
-          username: credentials?.username,
+          OR: [
+            { username: credentials?.username },
+            { email: credentials?.username },
+          ],
         },
       });
 
