@@ -23,31 +23,22 @@ export const seedProgram = async (
             id: org,
           },
         },
+        foundationalCourses: {
+          create: {
+            courses: {
+              connect: prog.foundationalCourses.map((course) => ({
+                codeName_organizationId: {
+                  codeName: course.codeName,
+                  organizationId: org,
+                },
+              })),
+            },
+          },
+        },
       },
     });
 
     console.log({ program });
-
-    const foundationalCourses = await prisma.program.update({
-      where: {
-        name_organizationId: {
-          name: prog.name,
-          organizationId: org,
-        },
-      },
-      data: {
-        foundationalCourses: {
-          connect: prog.foundationalCourses.map((course) => ({
-            codeName_organizationId: {
-              codeName: course.codeName,
-              organizationId: org,
-            },
-          })),
-        },
-      },
-    });
-
-    console.log({ foundationalCourses });
 
     // SEED ELECTIVE GROUPS
     const electiveGroupsPromises: Promise<ElectiveGroup>[] = [];

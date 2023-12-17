@@ -12,6 +12,12 @@ enum UserRole {
   Professor
 }
 
+model FoundationalCourses {
+  id       Int       @id @default(autoincrement())
+  courses  Course[]
+  programs Program[]
+}
+
 model CourseSelectionRule {
   id              String         @id @default(cuid())
   name            String
@@ -42,13 +48,15 @@ model ElectiveGroup {
 }
 
 model Program {
-  id                  String          @id @default(cuid())
-  name                String
-  requiredCredits     Int
-  foundationalCourses Course[]        @relation()
-  electiveGroups      ElectiveGroup[] @relation()
-  Organization        Organization    @relation(fields: [organizationId], references: [id])
-  organizationId      String
+  id                    String              @id @default(cuid())
+  name                  String
+  requiredCredits       Int
+  foundationalCourses   FoundationalCourses @relation(fields: [foundationalCoursesId], references: [id])
+  electiveGroups        ElectiveGroup[]     @relation()
+  Organization          Organization        @relation(fields: [organizationId], references: [id])
+  organizationId        String
+  foundationalCoursesId Int
+  Course                Course[]
 
   @@unique([name, organizationId])
 }
@@ -78,21 +86,22 @@ model User {
 }
 
 model Course {
-  id               String                   @id @default(cuid())
-  codeName         String
-  name             String
-  description      String
-  credits          Int
-  createdAt        DateTime                 @default(now())
-  updatedAt        DateTime                 @updatedAt
-  taughtBy         User                     @relation("TaughtBy", fields: [taughtById], references: [id])
-  taughtById       String
-  organization     Organization             @relation(fields: [organizationId], references: [id])
-  organizationId   String
-  enrolledStudents Enrollment[]
-  program          Program?                 @relation(fields: [programId], references: [id])
-  programId        String?
-  courseElectives  SelectedElectiveCourse[]
+  id                  String                   @id @default(cuid())
+  codeName            String
+  name                String
+  description         String
+  credits             Int
+  createdAt           DateTime                 @default(now())
+  updatedAt           DateTime                 @updatedAt
+  taughtBy            User                     @relation("TaughtBy", fields: [taughtById], references: [id])
+  taughtById          String
+  organization        Organization             @relation(fields: [organizationId], references: [id])
+  organizationId      String
+  enrolledStudents    Enrollment[]
+  program             Program?                 @relation(fields: [programId], references: [id])
+  programId           String?
+  courseElectives     SelectedElectiveCourse[]
+  foundationalCourses FoundationalCourses[]
 
   @@unique([codeName, organizationId])
 }
