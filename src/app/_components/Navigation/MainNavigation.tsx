@@ -46,6 +46,13 @@ export function MainNavigation({
       >
         Degree Audit
       </NavLink>
+      <NavLink
+        href={NAVIGATION_PATHS.DASHBOARD_PROGRAMS}
+        path={path}
+        router={router}
+      >
+        Programs
+      </NavLink>
     </nav>
   );
 }

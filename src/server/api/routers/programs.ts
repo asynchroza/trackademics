@@ -1,8 +1,30 @@
-import { rules } from ".eslintrc.cjs";
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
 export const programRouter = createTRPCRouter({
+  getPrograms: protectedProcedure.query(({ ctx }) => {
+    return ctx.db.program.findMany({
+      where: {
+        organizationId: ctx.session.user.organizationId,
+      },
+      include: {
+        foundationalCourses: {
+          select: {
+            courses: true,
+          },
+        },
+        electiveGroups: {
+          select: {
+            requiredCourses: true,
+            requiredCredits: true,
+            electiveCourses: true,
+            rules: true,
+            name: true,
+          },
+        },
+      },
+    });
+  }),
   getProgram: protectedProcedure
     .input(
       z.object({
