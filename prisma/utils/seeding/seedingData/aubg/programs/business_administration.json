@@ -32,7 +32,7 @@
       "description": ""
     },
     {
-      "codeName": "BUS3030",
+      "codeName": "BUS3020",
       "name": "Corporate Finance I",
       "description": ""
     },
@@ -110,7 +110,7 @@
           "name": "Intermediate Accounting I"
         },
         {
-          "codeName": "BUS3020",
+          "codeName": "BUS3030",
           "name": "Intermediate Accounting II"
         }
       ]

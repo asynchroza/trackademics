@@ -15,9 +15,19 @@ export const programRouter = createTRPCRouter({
         },
         electiveGroups: {
           select: {
-            requiredCourses: true,
+            requiredCourses: {
+              select: {
+                codeName: true,
+                course: true,
+              },
+            },
             requiredCredits: true,
-            electiveCourses: true,
+            electiveCourses: {
+              select: {
+                codeName: true,
+                course: true,
+              },
+            },
             rules: true,
             name: true,
           },
