@@ -6,11 +6,12 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Icons } from "@/components/ui/icons";
 import { signIn } from "next-auth/react";
-import React, { type ChangeEvent } from "react";
+import React, { useState, type ChangeEvent } from "react";
 import { useRouter } from "next/navigation";
 import { NAVIGATION_PATHS } from "~/app/_constants/navigation";
 import { type Organization } from "@prisma/client";
 import Image from "next/image";
+import { AlertDestructive } from "@/components/ui/alert_destructive";
 
 type LoginData = {
   id: string;
@@ -26,6 +27,7 @@ const Login = ({
 }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [isError, setIsError] = useState(false);
   const [formData, setFormData] = React.useState<LoginData>({
     id: "",
     password: "",
@@ -52,6 +54,7 @@ const Login = ({
       router.push(NAVIGATION_PATHS.DASHBOARD_HOME);
     } else {
       // TODO: Display error
+      setIsError(true);
       setIsLoading(false);
     }
   }
@@ -68,6 +71,7 @@ const Login = ({
       <form onSubmit={onSubmit}>
         <div className="grid w-[20vw] gap-2">
           <div className="grid gap-1">
+            <AlertDestructive className={isError ? "" : "hidden"} />
             <Label className="sr-only" htmlFor="email">
               Email or Username
             </Label>

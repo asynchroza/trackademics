@@ -3,7 +3,6 @@
 import { type Course } from "@prisma/client";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { isNumber } from "util";
 import { SearchBar } from "~/app/_components/Common/SearchBar/SearchBar";
 import { CourseBox } from "~/app/_components/Course/CourseBox";
 import LoadingSpinner from "~/app/_components/Icons/LoadingSpinner";
