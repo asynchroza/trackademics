@@ -9,10 +9,12 @@ import {
 
 export function SearchBar({
   className = "",
+  defaultValue = "",
   setFilter,
   setLoading,
 }: {
   className?: string;
+  defaultValue?: string;
   setFilter: Dispatch<SetStateAction<string>>;
   setLoading: Dispatch<SetStateAction<boolean>>;
 }) {
@@ -44,6 +46,7 @@ export function SearchBar({
         placeholder="Search..."
         className="md:w-[100px] lg:w-[300px]"
         onChange={handleInputChange}
+        defaultValue={defaultValue}
       />
     </div>
   );

@@ -1,15 +1,27 @@
 "use client";
 
 import { type Course } from "@prisma/client";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { isNumber } from "util";
 import { SearchBar } from "~/app/_components/Common/SearchBar/SearchBar";
 import { CourseBox } from "~/app/_components/Course/CourseBox";
 import LoadingSpinner from "~/app/_components/Icons/LoadingSpinner";
+import { NAVIGATION_PATHS } from "~/app/_constants/navigation";
 import { api } from "~/trpc/react";
 
+const getCorrectPageNumber = (queryParam: string | null) => {
+  return Number(queryParam) > 0 ? Number(queryParam) : 1;
+};
+
 export default function Courses() {
-  const [filter, setFilter] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
+  const router = useRouter();
+  const params = useSearchParams();
+
+  const [filter, setFilter] = useState(params.get("filter") ?? "");
+  const [currentPage, setCurrentPage] = useState(
+    getCorrectPageNumber(params.get("page")),
+  );
   const [loading, setLoading] = useState(false);
   const pageSize = 9;
 
@@ -26,9 +38,19 @@ export default function Courses() {
     setCurrentPage(1);
   }, [filter]);
 
+  useEffect(() => {
+    router.push(
+      `${NAVIGATION_PATHS.DASHBOARD_COURSES}?filter=${filter}&page=${currentPage}`,
+    );
+  }, [filter, currentPage, router]);
+
   return (
     <div className="w-4/5">
-      <SearchBar setFilter={setFilter} setLoading={setLoading} />
+      <SearchBar
+        setFilter={setFilter}
+        setLoading={setLoading}
+        defaultValue={filter}
+      />
       <RenderCourses courses={data} loading={loading || isRequestLoading} />
       <div
         className="bg-white"
