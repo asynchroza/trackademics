@@ -14,13 +14,17 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { type Course, type Prisma } from "@prisma/client";
+import { type Course } from "@prisma/client";
 import {
   useReactTable,
   flexRender,
   getCoreRowModel,
   createColumnHelper,
 } from "@tanstack/react-table";
+import type {
+  ExtendedProgram,
+  FetchedRulesProgram,
+} from "~/types/extendedPrismaTypes";
 
 type PickedCourse = Pick<Course, "codeName" | "name">;
 
@@ -84,39 +88,12 @@ function CourseTable({ data }: { data: PickedCourse[] }) {
   );
 }
 
-// https://github.com/prisma/prisma/discussions/10928
-
-type Program = Prisma.ProgramGetPayload<{
-  include: {
-    foundationalCourses: {
-      select: {
-        courses: true;
-      };
-    };
-    electiveGroups: {
-      select: {
-        requiredCourses: {
-          select: {
-            codeName: true;
-            course: true;
-          };
-        };
-        requiredCredits: true;
-        electiveCourses: {
-          select: {
-            codeName: true;
-            course: true;
-          };
-        };
-        rules: true;
-        name: true;
-      };
-    };
-  };
-}>;
-
 // TODO: Add logic for making an elective group required
-export const CourseAccordion = ({ program }: { program: Program }) => {
+export const CourseAccordion = ({
+  program,
+}: {
+  program: FetchedRulesProgram;
+}) => {
   return (
     <Accordion type="single" collapsible className="w-[40vw]">
       <AccordionItem value="foundational">
@@ -131,8 +108,8 @@ export const CourseAccordion = ({ program }: { program: Program }) => {
           <AccordionTrigger>{electiveGroup.name}</AccordionTrigger>
           <AccordionContent>
             <p className="text-slate-600">
-              Required total credits from this elective group:{" "}
-              {electiveGroup.requiredCredits}
+              {electiveGroup.required ? "Required" : "Allowed"} total credits
+              from this elective group: {electiveGroup.requiredCredits}
             </p>
             <CourseTable
               data={electiveGroup.requiredCourses.map(
@@ -143,9 +120,14 @@ export const CourseAccordion = ({ program }: { program: Program }) => {
 
           <AccordionContent>
             <CourseTable
-              data={electiveGroup.electiveCourses.map(
-                (course) => course.course,
-              )}
+              data={[
+                ...electiveGroup.electiveCourses.map((course) => course.course),
+                ...(electiveGroup.ruledOutElectiveCourses
+                  ? electiveGroup.ruledOutElectiveCourses.map(
+                      (course) => course,
+                    )
+                  : []),
+              ]}
             />
           </AccordionContent>
         </AccordionItem>

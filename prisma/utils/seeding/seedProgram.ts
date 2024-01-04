@@ -51,6 +51,7 @@ export const seedProgram = async (
           },
           update: {},
           create: {
+            required: group.required,
             name: group.name,
             requiredCredits: group.requiredCredits,
             ...(group.requiredCourses
@@ -82,7 +83,7 @@ export const seedProgram = async (
                   rules: {
                     createMany: {
                       data: group.electiveRules.map((rule) => ({
-                        regex: rule.regex,
+                        patterns: rule.patterns,
                         name: rule.name,
                       })),
                     },

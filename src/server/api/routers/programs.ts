@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
+import type { FetchedRulesProgram } from "~/types/extendedPrismaTypes";
 
 export const programRouter = createTRPCRouter({
   getPrograms: protectedProcedure.query(({ ctx }) => {
@@ -15,6 +16,7 @@ export const programRouter = createTRPCRouter({
         },
         electiveGroups: {
           select: {
+            required: true,
             requiredCourses: {
               select: {
                 codeName: true,
@@ -41,27 +43,68 @@ export const programRouter = createTRPCRouter({
         name: z.string(),
       }),
     )
-    .query(({ ctx, input }) => {
+    .query(async ({ ctx, input }) => {
       const { name } = input;
-      return ctx.db.program.findUnique({
+      const program = (await ctx.db.program.findUnique({
         where: {
           name_organizationId: {
             name,
             organizationId: ctx.session.user.organizationId,
           },
         },
-        select: {
-          requiredCredits: true,
-          foundationalCourses: true,
+        include: {
+          foundationalCourses: {
+            select: {
+              courses: true,
+            },
+          },
           electiveGroups: {
             select: {
+              required: true,
+              requiredCourses: {
+                select: {
+                  codeName: true,
+                  course: true,
+                },
+              },
               requiredCredits: true,
-              electiveCourses: true,
-              requiredCourses: true,
+              electiveCourses: {
+                select: {
+                  codeName: true,
+                  course: true,
+                },
+              },
               rules: true,
+              name: true,
             },
           },
         },
-      });
+      })) as FetchedRulesProgram;
+
+      const ruledOutClasses: Promise<void>[] = [];
+
+      program?.electiveGroups.forEach((eg) =>
+        eg.rules.forEach((rule) => {
+          ruledOutClasses.push(
+            (async () => {
+              const courses = await ctx.db.course.findMany({
+                where: {
+                  OR: rule.patterns.map((pattern) => ({
+                    codeName: {
+                      startsWith: pattern,
+                    },
+                  })),
+                },
+              });
+
+              eg.ruledOutElectiveCourses = courses;
+            })(),
+          );
+        }),
+      );
+
+      await Promise.all(ruledOutClasses);
+
+      return program;
     }),
 });

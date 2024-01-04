@@ -21,7 +21,7 @@ model FoundationalCourses {
 model CourseSelectionRule {
   id              String         @id @default(cuid())
   name            String
-  regex           String
+  patterns           String[]
   ElectiveGroup   ElectiveGroup? @relation(fields: [electiveGroupId], references: [id])
   electiveGroupId String?
 }
@@ -40,6 +40,7 @@ model SelectedElectiveCourse {
 model ElectiveGroup {
   id              String                   @id @default(cuid())
   name            String                   @unique
+  required        Boolean
   requiredCredits Int
   requiredCourses SelectedElectiveCourse[] @relation("RequiredCourse")
   electiveCourses SelectedElectiveCourse[] @relation("ElectiveCourse")

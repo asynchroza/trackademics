@@ -6,11 +6,13 @@ export default function Programs() {
 }
 
 async function RenderProgram() {
-  const programs = await api.program.getPrograms.query();
+  const program = await api.program.getProgram.query({
+    name: "Business Administration",
+  });
 
   return (
     <div className="flex flex-row justify-center">
-      <CourseAccordion program={programs[0]!} />
+      <CourseAccordion program={program} />
     </div>
   );
 }

@@ -48,4 +48,19 @@ export const courseRouter = createTRPCRouter({
       },
     });
   }),
+  getPatternMatchingCourses: protectedProcedure
+    .input(z.object({ patterns: z.string().array() }))
+    .query(({ ctx, input }) => {
+      const { patterns } = input;
+
+      return ctx.db.course.findMany({
+        where: {
+          OR: patterns.map((pattern) => ({
+            codeName: {
+              startsWith: pattern,
+            },
+          })),
+        },
+      });
+    }),
 });
