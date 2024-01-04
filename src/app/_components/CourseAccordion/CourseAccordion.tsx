@@ -115,6 +115,7 @@ type Program = Prisma.ProgramGetPayload<{
   };
 }>;
 
+// TODO: Add logic for making an elective group required
 export const CourseAccordion = ({ program }: { program: Program }) => {
   return (
     <Accordion type="single" collapsible className="w-[40vw]">
@@ -129,6 +130,10 @@ export const CourseAccordion = ({ program }: { program: Program }) => {
         <AccordionItem value={electiveGroup.name} key={electiveGroup.name}>
           <AccordionTrigger>{electiveGroup.name}</AccordionTrigger>
           <AccordionContent>
+            <p className="text-slate-600">
+              Required total credits from this elective group:{" "}
+              {electiveGroup.requiredCredits}
+            </p>
             <CourseTable
               data={electiveGroup.requiredCourses.map(
                 (course) => course.course,
