@@ -69,12 +69,10 @@ function CourseTable({ data }: { data: PickedCourse[] }) {
         </TableHeader>
         <TableBody>
           {table.getRowModel().rows.map((row) => (
-            <TableRow
-              key={row.id}
-              data-state={row.getIsSelected() && "selected"}
-            >
+            <TableRow key={row.id}>
               {row.getVisibleCells().map((cell) => (
-                <TableCell key={cell.id}>
+                // NOTE: setting fixed width here aligns columns
+                <TableCell key={cell.id} className="w-[20vw]">
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </TableCell>
               ))}
@@ -126,6 +124,7 @@ export const CourseAccordion = ({ program }: { program: Program }) => {
           <CourseTable data={program.foundationalCourses.courses} />
         </AccordionContent>
       </AccordionItem>
+
       {program.electiveGroups.map((electiveGroup) => (
         <AccordionItem value={electiveGroup.name} key={electiveGroup.name}>
           <AccordionTrigger>{electiveGroup.name}</AccordionTrigger>
