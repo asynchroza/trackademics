@@ -3,40 +3,6 @@ import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import type { FetchedRulesProgram } from "~/types/extendedPrismaTypes";
 
 export const programRouter = createTRPCRouter({
-  getPrograms: protectedProcedure.query(({ ctx }) => {
-    return ctx.db.program.findMany({
-      where: {
-        organizationId: ctx.session.user.organizationId,
-      },
-      include: {
-        foundationalCourses: {
-          select: {
-            courses: true,
-          },
-        },
-        electiveGroups: {
-          select: {
-            required: true,
-            requiredCourses: {
-              select: {
-                codeName: true,
-                course: true,
-              },
-            },
-            requiredCredits: true,
-            electiveCourses: {
-              select: {
-                codeName: true,
-                course: true,
-              },
-            },
-            rules: true,
-            name: true,
-          },
-        },
-      },
-    });
-  }),
   getProgram: protectedProcedure
     .input(
       z.object({
