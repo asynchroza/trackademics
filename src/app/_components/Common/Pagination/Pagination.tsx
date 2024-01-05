@@ -1,0 +1,79 @@
+import React, { Dispatch, SetStateAction } from "react";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationEllipsis,
+  PaginationPrevious,
+  PaginationNext,
+} from "@/components/ui/pagination";
+
+export const PaginationNavigation = ({
+  currentPage,
+  maxNumberOfPages,
+  setCurrentPage,
+}: {
+  currentPage: number;
+  maxNumberOfPages: number;
+  setCurrentPage: Dispatch<SetStateAction<number>>;
+}) => {
+  const generatePaginationLinks = () => {
+    const links = [];
+    const totalPages = Math.min(currentPage + 2, maxNumberOfPages);
+
+    for (let i = Math.max(1, currentPage - 1); i <= totalPages; i++) {
+      links.push(
+        <PaginationItem key={i}>
+          <PaginationLink href="#" isActive={i === currentPage}>
+            {i}
+          </PaginationLink>
+        </PaginationItem>,
+      );
+    }
+
+    if (totalPages < maxNumberOfPages) {
+      links.push(
+        <PaginationItem key="ellipsis">
+          <PaginationEllipsis />
+        </PaginationItem>,
+      );
+
+      links.push(
+        <PaginationItem key={maxNumberOfPages}>
+          <PaginationLink href="#">{maxNumberOfPages}</PaginationLink>
+        </PaginationItem>,
+      );
+    }
+
+    return links;
+  };
+
+  return (
+    <Pagination>
+      <PaginationContent>
+        <PaginationItem>
+          <PaginationPrevious
+            onClick={() => {
+              if (currentPage !== 1) {
+                setCurrentPage((state) => state - 1);
+              }
+            }}
+          />
+        </PaginationItem>
+
+        {generatePaginationLinks()}
+
+        <PaginationItem>
+          <PaginationNext
+            onClick={() => {
+              if (currentPage !== maxNumberOfPages) {
+                setCurrentPage((state) => state + 1);
+              }
+            }}
+          />
+        </PaginationItem>
+      </PaginationContent>
+    </Pagination>
+  );
+};
