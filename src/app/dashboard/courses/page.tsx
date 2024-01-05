@@ -50,7 +50,10 @@ export default function Courses() {
         setLoading={setLoading}
         defaultValue={filter}
       />
-      <RenderCourses courses={data} loading={loading || isRequestLoading} />
+      <RenderCourses
+        courses={data?.currentPageCourses}
+        loading={loading || isRequestLoading}
+      />
       <div
         className="bg-white"
         onClick={() => setCurrentPage((state) => (state > 1 ? state - 1 : 1))}
@@ -61,11 +64,11 @@ export default function Courses() {
         className="bg-white"
         onClick={() =>
           setCurrentPage((state) =>
-            data?.length === pageSize ? state + 1 : state,
+            data?.currentPageCourses.length === pageSize ? state + 1 : state,
           )
         }
       >
-        Next
+        Next {data?.totalNumberOfPages === currentPage ? "No other pages" : ""}
       </div>
     </div>
   );

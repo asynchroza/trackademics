@@ -11,11 +11,11 @@ export const courseRouter = createTRPCRouter({
         pageSize: z.number().optional(),
       }),
     )
-    .query(({ ctx, input }) => {
+    .query(async ({ ctx, input }) => {
       const { filter, page = 1, pageSize = 10 } = input;
       const skip = (page - 1) * pageSize;
 
-      return ctx.db.course.findMany({
+      const currentPageCourses = await ctx.db.course.findMany({
         where: {
           OR: [
             {
@@ -32,6 +32,31 @@ export const courseRouter = createTRPCRouter({
         skip,
         take: pageSize,
       });
+
+      const totalNumberOfPages = Math.ceil(
+        (await ctx.db.course.count({
+          where: {
+            OR: [
+              {
+                name: {
+                  contains: filter,
+                  mode: PRISMA_FILTER_MODES.INSENSITIVE,
+                },
+              },
+              {
+                id: { contains: filter, mode: PRISMA_FILTER_MODES.INSENSITIVE },
+              },
+            ],
+            AND: [
+              {
+                organizationId: { equals: ctx.session.user.organizationId },
+              },
+            ],
+          },
+        })) / pageSize,
+      );
+
+      return { currentPageCourses, totalNumberOfPages };
     }),
   getUserCourses: protectedProcedure.query(({ ctx }) => {
     return ctx.db.user.findUnique({
