@@ -15,7 +15,7 @@ export function SearchBar({
 }: {
   className?: string;
   defaultValue?: string;
-  setFilter: Dispatch<SetStateAction<string>>;
+  setFilter: (arg: string) => void;
   setLoading: Dispatch<SetStateAction<boolean>>;
 }) {
   const [debouncer, setDebouncer] = useState<NodeJS.Timeout>();

@@ -39,19 +39,20 @@ export const PaginationNavigation = ({
       );
     }
 
-    if (totalPages < maxNumberOfPages) {
-      links.push(
-        <PaginationItem key="ellipsis">
-          <PaginationEllipsis />
-        </PaginationItem>,
-      );
+    // TODO: Come back to this once there're more seeded courses
+    // if (totalPages < maxNumberOfPages) {
+    //   links.push(
+    //     <PaginationItem key="ellipsis">
+    //       <PaginationEllipsis />
+    //     </PaginationItem>,
+    //   );
 
-      links.push(
-        <PaginationItem key={maxNumberOfPages}>
-          <PaginationLink href="#">{maxNumberOfPages}</PaginationLink>
-        </PaginationItem>,
-      );
-    }
+    //   links.push(
+    //     <PaginationItem key={maxNumberOfPages}>
+    //       <PaginationLink onClick={}>{maxNumberOfPages}</PaginationLink>
+    //     </PaginationItem>,
+    //   );
+    // }
 
     return links;
   };

@@ -14,11 +14,19 @@ const getCorrectPageNumber = (queryParam: string | null) => {
   return Number(queryParam) > 0 ? Number(queryParam) : 1;
 };
 
+type Filter = {
+  current: string;
+  previous: string | null;
+};
+
 export default function Courses() {
   const router = useRouter();
   const params = useSearchParams();
 
-  const [filter, setFilter] = useState(params.get("filter") ?? "");
+  const [filter, setFilter] = useState<Filter>({
+    current: params.get("filter") ?? "",
+    previous: null,
+  });
   const [currentPage, setCurrentPage] = useState(
     getCorrectPageNumber(params.get("page")),
   );
@@ -27,29 +35,34 @@ export default function Courses() {
 
   const { data, isLoading: isRequestLoading } =
     api.course.getFilteredCourses.useQuery({
-      filter,
+      filter: filter.current,
       page: currentPage,
       pageSize,
     });
 
+  const wrappedSetFilter = (current: string) => {
+    setFilter((prev) => ({ current, previous: prev.current }));
+  };
+
   useEffect(() => {
-    // make sure to start from the first page
-    // of fetched courses when a new filter is applied
-    setCurrentPage(1);
+    // To prevent the initial page from being set to 1 upon loading,
+    // we verify if the filter has been saved previously.
+    // This enables users to share links and load identical results in various tabs.
+    if (filter.previous) setCurrentPage(1);
   }, [filter]);
 
   useEffect(() => {
     router.push(
-      `${NAVIGATION_PATHS.DASHBOARD_COURSES}?filter=${filter}&page=${currentPage}`,
+      `${NAVIGATION_PATHS.DASHBOARD_COURSES}?filter=${filter?.current}&page=${currentPage}`,
     );
   }, [filter, currentPage, router]);
 
   return (
     <div className="w-4/5">
       <SearchBar
-        setFilter={setFilter}
+        setFilter={wrappedSetFilter}
         setLoading={setLoading}
-        defaultValue={filter}
+        defaultValue={filter.current}
       />
       <RenderCourses
         courses={data?.currentPageCourses}
