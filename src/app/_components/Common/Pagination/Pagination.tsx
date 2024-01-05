@@ -49,6 +49,7 @@ export const PaginationNavigation = ({
     return links;
   };
 
+  // TODO: Dim previous and next buttons if they are not supposed to be pressed
   return (
     <Pagination>
       <PaginationContent>
