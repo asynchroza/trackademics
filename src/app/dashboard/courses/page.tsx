@@ -27,6 +27,7 @@ export default function Courses() {
     current: params.get("filter") ?? "",
     previous: null,
   });
+  const [cachedMaxNumberPages, setCachedMaxNumberPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(
     getCorrectPageNumber(params.get("page")),
   );
@@ -52,6 +53,14 @@ export default function Courses() {
   }, [filter]);
 
   useEffect(() => {
+    // We need to keep the cached result of data.totalNumberOfPages in order
+    // to avoid redundant rerendering of the pagination component.
+    if (typeof data?.totalNumberOfPages === "number") {
+      setCachedMaxNumberPages(data.totalNumberOfPages);
+    }
+  }, [data]);
+
+  useEffect(() => {
     router.push(
       `${NAVIGATION_PATHS.DASHBOARD_COURSES}?filter=${filter?.current}&page=${currentPage}`,
     );
@@ -69,7 +78,7 @@ export default function Courses() {
         loading={loading || isRequestLoading}
       />
       <PaginationNavigation
-        maxNumberOfPages={data?.totalNumberOfPages ?? 0}
+        maxNumberOfPages={cachedMaxNumberPages}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
       />

@@ -26,16 +26,15 @@ export const PaginationNavigation = ({
 
     for (let i = Math.max(1, currentPage - 1); i <= totalPages; i++) {
       links.push(
-        <PaginationItem key={i}>
-          <PaginationLink
-            isActive={i === currentPage}
-            onClick={() => {
-              setCurrentPage(i);
-            }}
-          >
-            {i}
-          </PaginationLink>
-        </PaginationItem>,
+        <PaginationLink
+          key={i}
+          isActive={i === currentPage}
+          onClick={() => {
+            setCurrentPage(i);
+          }}
+        >
+          {i}
+        </PaginationLink>,
       );
     }
 
