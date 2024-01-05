@@ -33,7 +33,8 @@ export default function Courses() {
     current: params.get("filter") ?? "",
     previous: null,
   });
-  const [cachedMaxNumberPages, setCachedMaxNumberPages] = useState(0);
+  // having the initial state as -1 indicates to pagination navigation skeleton to render on first load
+  const [cachedMaxNumberPages, setCachedMaxNumberPages] = useState(-1);
   const [currentPage, setCurrentPage] = useState(
     getCorrectPageNumber(params.get("page")),
   );

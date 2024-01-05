@@ -55,7 +55,7 @@ export const PaginationNavigation = ({
     return links;
   };
 
-  if (maxNumberOfPages === 0)
+  if (maxNumberOfPages === -1)
     return <Skeleton className="mx-auto my-[1vh] h-[3vh] w-[25vw]" />;
 
   // TODO: Dim previous and next buttons if they are not supposed to be pressed
