@@ -5,7 +5,10 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { PaginationNavigation } from "~/app/_components/Common/Pagination/Pagination";
 import { SearchBar } from "~/app/_components/Common/SearchBar/SearchBar";
-import { CourseBox } from "~/app/_components/Course/CourseBox";
+import {
+  CourseBox,
+  CourseBoxSkeleton,
+} from "~/app/_components/Course/CourseBox";
 import LoadingSpinner from "~/app/_components/Icons/LoadingSpinner";
 import { NAVIGATION_PATHS } from "~/app/_constants/navigation";
 import { api } from "~/trpc/react";
@@ -96,7 +99,7 @@ function RenderCourses({
   return (
     <div className="grid h-[60vh] grid-cols-3">
       {loading ? (
-        <LoadingSpinner />
+        Array(9).fill(<CourseBoxSkeleton />)
       ) : courses && courses?.length > 0 ? (
         courses.map((course) => <CourseBox course={course} key={course.id} />)
       ) : (
