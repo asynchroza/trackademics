@@ -25,13 +25,13 @@ export function MainNavigation({
       >
         Home
       </NavLink>
-      <NavLink
+      {/* <NavLink
         href={NAVIGATION_PATHS.DASHBOARD_SCHEDULE}
         path={path}
         router={router}
       >
         Schedule
-      </NavLink>
+      </NavLink> */}
       <NavLink
         href={NAVIGATION_PATHS.DASHBOARD_COURSES}
         path={path}
@@ -39,13 +39,13 @@ export function MainNavigation({
       >
         Courses
       </NavLink>
-      <NavLink
+      {/* <NavLink
         href={NAVIGATION_PATHS.DASHBOARD_AUDIT}
         path={path}
         router={router}
       >
         Degree Audit
-      </NavLink>
+      </NavLink> */}
       <NavLink
         href={NAVIGATION_PATHS.DASHBOARD_PROGRAMS}
         path={path}

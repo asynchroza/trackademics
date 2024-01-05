@@ -85,7 +85,6 @@ function CourseTable({ data }: { data: PickedCourse[] }) {
   );
 }
 
-// TODO: Add logic for making an elective group required
 export const CourseAccordion = ({
   program,
 }: {
