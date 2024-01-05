@@ -2,7 +2,7 @@
 
 import type { Course, Prisma } from "@prisma/client";
 
-export type ExtendedProgram = Prisma.ProgramGetPayload<{
+type ExtendedProgram = Prisma.ProgramGetPayload<{
   include: {
     foundationalCourses: {
       select: {

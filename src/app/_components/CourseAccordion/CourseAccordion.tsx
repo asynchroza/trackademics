@@ -21,10 +21,7 @@ import {
   getCoreRowModel,
   createColumnHelper,
 } from "@tanstack/react-table";
-import type {
-  ExtendedProgram,
-  FetchedRulesProgram,
-} from "~/types/extendedPrismaTypes";
+import type { FetchedRulesProgram } from "~/types/extendedPrismaTypes";
 
 type PickedCourse = Pick<Course, "codeName" | "name">;
 
@@ -99,6 +96,10 @@ export const CourseAccordion = ({
       <AccordionItem value="foundational">
         <AccordionTrigger>Foundational Courses</AccordionTrigger>
         <AccordionContent>
+          <p className="text-slate-600">
+            Successful completion of this specific set of prerequisite courses
+            is required for graduation from this program.
+          </p>
           <CourseTable data={program.foundationalCourses.courses} />
         </AccordionContent>
       </AccordionItem>
@@ -111,6 +112,12 @@ export const CourseAccordion = ({
               {electiveGroup.required ? "Required" : "Allowed"} total credits
               from this elective group: {electiveGroup.requiredCredits}
             </p>
+            {electiveGroup.requiredCourses.length != 0 ? (
+              <p className="text-slate-600">
+                To fulfill the requirements of this elective group, the courses
+                below are mandatory:
+              </p>
+            ) : null}
             <CourseTable
               data={electiveGroup.requiredCourses.map(
                 (course) => course.course,
@@ -119,6 +126,11 @@ export const CourseAccordion = ({
           </AccordionContent>
 
           <AccordionContent>
+            <p className="text-slate-600">
+              The courses below are elective, affording you the flexibility to
+              choose those that align with the group&#39;s requirements based on
+              your preferences:
+            </p>
             <CourseTable
               data={[
                 ...electiveGroup.electiveCourses.map((course) => course.course),
