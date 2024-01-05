@@ -3,12 +3,11 @@
 import {
   Pagination,
   PaginationContent,
-  PaginationItem,
   PaginationLink,
-  PaginationEllipsis,
   PaginationPrevious,
   PaginationNext,
 } from "@/components/ui/pagination";
+import { Skeleton } from "@/components/ui/skeleton";
 import type { Dispatch, SetStateAction } from "react";
 
 export const PaginationNavigation = ({
@@ -56,9 +55,12 @@ export const PaginationNavigation = ({
     return links;
   };
 
+  if (maxNumberOfPages === 0)
+    return <Skeleton className="mx-auto my-[1vh] h-[3vh] w-[25vw]" />;
+
   // TODO: Dim previous and next buttons if they are not supposed to be pressed
   return (
-    <Pagination>
+    <Pagination className="h-[5vh]">
       <PaginationContent>
         <PaginationPrevious
           onClick={() => {

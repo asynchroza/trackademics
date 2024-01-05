@@ -9,7 +9,6 @@ import {
   CourseBox,
   CourseBoxSkeleton,
 } from "~/app/_components/Course/CourseBox";
-import LoadingSpinner from "~/app/_components/Icons/LoadingSpinner";
 import { NAVIGATION_PATHS } from "~/app/_constants/navigation";
 import { api } from "~/trpc/react";
 
@@ -21,6 +20,10 @@ type Filter = {
   current: string;
   previous: string | null;
 };
+
+const skeletonArray = Array.from({ length: 9 }, (_, index) => (
+  <CourseBoxSkeleton key={index} />
+));
 
 export default function Courses() {
   const router = useRouter();
@@ -99,7 +102,7 @@ function RenderCourses({
   return (
     <div className="grid h-[60vh] grid-cols-3">
       {loading ? (
-        Array(9).fill(<CourseBoxSkeleton />)
+        skeletonArray
       ) : courses && courses?.length > 0 ? (
         courses.map((course) => <CourseBox course={course} key={course.id} />)
       ) : (
