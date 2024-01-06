@@ -1,10 +1,13 @@
-import { AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import {
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { RequiredElectiveGroup } from "./RequiredElectiveGroup";
 import { OptionalElectiveGroup } from "./OptionalElectiveGroup";
 import type { FullElectiveGroup } from "~/types/extendedPrismaTypes";
 import type { EnrolledCourse } from "./types";
 import { useCountCredits } from "./useCountCredits";
-import { AccordionContent } from "@radix-ui/react-accordion";
 
 export const ElectiveGroup = ({
   electiveGroup,

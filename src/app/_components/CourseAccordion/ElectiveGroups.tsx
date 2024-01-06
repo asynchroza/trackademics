@@ -1,6 +1,4 @@
 import type { FetchedRulesProgram } from "~/types/extendedPrismaTypes";
-import { checkCourseStatus } from "./utils";
-import { AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import type { EnrolledCourse } from "./types";
 import { ElectiveGroup } from "./ElectiveGroup";
 
