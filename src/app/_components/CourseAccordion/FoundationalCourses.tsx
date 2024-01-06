@@ -32,7 +32,9 @@ export const FoundationalCourses = ({
         <p className="p-2 text-end text-slate-600">
           Current credits: {countCredits()}
         </p>
+      </AccordionContent>
 
+      <AccordionContent>
         <CourseTable
           data={program.foundationalCourses.courses.map((course) => ({
             ...course,

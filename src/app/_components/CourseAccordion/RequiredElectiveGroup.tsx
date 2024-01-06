@@ -13,10 +13,6 @@ export const RequiredElectiveGroup = ({
 }) => {
   return (
     <AccordionContent>
-      <p className="text-slate-600">
-        {electiveGroup.required ? "Required" : "Allowed"} total credits from
-        this elective group: {electiveGroup.requiredCredits}
-      </p>
       {electiveGroup.requiredCourses.length != 0 ? (
         <p className="text-slate-600">
           To fulfill the requirements of this elective group, the courses below
