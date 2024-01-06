@@ -74,7 +74,7 @@ export function CourseTable({ data }: { data: PickedCourse[] }) {
             <TableRow key={row.id}>
               {row.getVisibleCells().map((cell) => (
                 // NOTE: setting fixed width here aligns columns
-                <TableCell key={cell.id} className="w-[35vw]">
+                <TableCell key={cell.id} className="w-[15vw]">
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </TableCell>
               ))}
