@@ -20,11 +20,6 @@ export default async function DashboardLayout({
     // /api/auth/signin?referred=dashboard
     redirect(NAVIGATION_PATHS.LOGIN);
   } else if (session.user.organizationId !== getFirstSubdomainFromHeaders()) {
-    console.log(
-      "HERE",
-      session.user.organizationId,
-      getFirstSubdomainFromHeaders(),
-    );
     // TODO: Make sure this works as expected when database has another seeded organization
     redirect(NAVIGATION_PATHS.LANDING_PAGE);
   }
