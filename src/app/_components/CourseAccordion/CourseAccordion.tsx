@@ -6,6 +6,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Table,
   TableBody,
@@ -21,9 +22,18 @@ import {
   getCoreRowModel,
   createColumnHelper,
 } from "@tanstack/react-table";
-import type { FetchedRulesProgram } from "~/types/extendedPrismaTypes";
+import type {
+  FetchedRulesProgram,
+  UserCourses,
+} from "~/types/extendedPrismaTypes";
 
-type PickedCourse = Pick<Course, "codeName" | "name">;
+// enum CourseStatus {
+//   CURRENT,
+//   TAKEN,
+//   NOT_TAKEN
+// }
+
+type PickedCourse = Pick<Course, "codeName" | "name"> & { status: boolean };
 
 const columnHelper = createColumnHelper<PickedCourse>();
 
@@ -35,6 +45,15 @@ const columns = [
   columnHelper.accessor("name", {
     header: () => "Name",
     cell: (info) => info.getValue(),
+  }),
+  columnHelper.accessor("status", {
+    header: () => "Status",
+    cell: (info) =>
+      info.getValue() ? (
+        <Checkbox checked={true} />
+      ) : (
+        <Checkbox checked={false} />
+      ),
   }),
 ];
 
@@ -73,7 +92,7 @@ function CourseTable({ data }: { data: PickedCourse[] }) {
             <TableRow key={row.id}>
               {row.getVisibleCells().map((cell) => (
                 // NOTE: setting fixed width here aligns columns
-                <TableCell key={cell.id} className="w-[20vw]">
+                <TableCell key={cell.id} className="w-[35vw]">
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </TableCell>
               ))}
@@ -85,13 +104,37 @@ function CourseTable({ data }: { data: PickedCourse[] }) {
   );
 }
 
+type EnrolledCourses = {
+  codeName: string;
+  current: boolean;
+};
+
+const checkCourseStatus = (
+  codeName: string,
+  enrolledCourses: EnrolledCourses[] | undefined,
+): boolean => {
+  if (!enrolledCourses) return false;
+  const status =
+    enrolledCourses
+      .filter((enrolledCourse) => enrolledCourse.codeName === codeName)
+      .at(0)?.current ?? false;
+  return status;
+};
+
 export const CourseAccordion = ({
   program,
+  userCourses,
 }: {
   program: FetchedRulesProgram;
+  userCourses?: UserCourses | null;
 }) => {
+  const enrolledCourses = userCourses?.enrolledCourses.map((course) => ({
+    codeName: course.course.codeName,
+    current: course.current,
+  }));
+
   return (
-    <Accordion type="single" collapsible className="w-[40vw]">
+    <Accordion type="single" collapsible className="w-[45vw]">
       <AccordionItem value="foundational">
         <AccordionTrigger>Foundational Courses</AccordionTrigger>
         <AccordionContent>
@@ -99,7 +142,12 @@ export const CourseAccordion = ({
             Successful completion of this specific set of prerequisite courses
             is required for graduation from this program.
           </p>
-          <CourseTable data={program.foundationalCourses.courses} />
+          <CourseTable
+            data={program.foundationalCourses.courses.map((course) => ({
+              ...course,
+              status: checkCourseStatus(course.codeName, enrolledCourses),
+            }))}
+          />
         </AccordionContent>
       </AccordionItem>
 
@@ -118,9 +166,10 @@ export const CourseAccordion = ({
               </p>
             ) : null}
             <CourseTable
-              data={electiveGroup.requiredCourses.map(
-                (course) => course.course,
-              )}
+              data={electiveGroup.requiredCourses.map((course) => ({
+                ...course.course,
+                status: checkCourseStatus(course.codeName, enrolledCourses),
+              }))}
             />
           </AccordionContent>
 
@@ -132,11 +181,18 @@ export const CourseAccordion = ({
             </p>
             <CourseTable
               data={[
-                ...electiveGroup.electiveCourses.map((course) => course.course),
+                ...electiveGroup.electiveCourses.map((course) => ({
+                  ...course.course,
+                  status: checkCourseStatus(course.codeName, enrolledCourses),
+                })),
                 ...(electiveGroup.ruledOutElectiveCourses
-                  ? electiveGroup.ruledOutElectiveCourses.map(
-                      (course) => course,
-                    )
+                  ? electiveGroup.ruledOutElectiveCourses.map((course) => ({
+                      ...course,
+                      status: checkCourseStatus(
+                        course.codeName,
+                        enrolledCourses,
+                      ),
+                    }))
                   : []),
               ]}
             />

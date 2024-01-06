@@ -104,6 +104,7 @@ export const seedOrganization = async (
               connectOrCreate: randomCourses.map((course) => ({
                 where: { id: course.id },
                 create: {
+                  current: Math.random() < 0.5,
                   course: {
                     connect: { id: course.id },
                   },

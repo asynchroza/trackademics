@@ -1,6 +1,5 @@
 "use client";
 
-import { type Course } from "@prisma/client";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { PaginationNavigation } from "~/app/_components/Common/Pagination/Pagination";
@@ -11,7 +10,7 @@ import {
 } from "~/app/_components/Course/CourseBox";
 import { NAVIGATION_PATHS } from "~/app/_constants/navigation";
 import { api } from "~/trpc/react";
-import { CourseWithTeachingProfessor } from "~/types/extendedPrismaTypes";
+import type { CourseWithTeachingProfessor } from "~/types/extendedPrismaTypes";
 
 const getCorrectPageNumber = (queryParam: string | null) => {
   return Number(queryParam) > 0 ? Number(queryParam) : 1;

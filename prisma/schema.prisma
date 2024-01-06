@@ -64,6 +64,7 @@ model Program {
 
 model Enrollment {
   id        String   @id @default(cuid())
+  current   Boolean  // TODO: To swap with actual logic for storing the semester in which the course is taken
   course    Course   @relation(fields: [courseId], references: [id])
   courseId  String
   student   User     @relation(fields: [studentId], references: [id])

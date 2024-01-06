@@ -76,6 +76,7 @@ export const courseRouter = createTRPCRouter({
         enrolledCourses: {
           select: {
             course: true,
+            current: true,
           },
         },
         taughtCourses: true,

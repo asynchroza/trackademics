@@ -1,4 +1,4 @@
-import type { Course, Enrollment, PrismaClient } from "@prisma/client";
+import type { Course, PrismaClient } from "@prisma/client";
 
 export const seedStudent = async (prisma: PrismaClient) => {
   const majorCourses = [
@@ -47,6 +47,7 @@ export const seedStudent = async (prisma: PrismaClient) => {
     data: courses.map((courses) => ({
       courseId: courses!.id,
       studentId: misho.id,
+      current: Math.random() < 0.5,
     })),
   });
 };

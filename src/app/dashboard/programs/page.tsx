@@ -10,9 +10,11 @@ async function RenderProgram() {
     name: "Business Administration",
   });
 
+  const userCourses = await api.course.getUserCourses.query();
+
   return (
     <div className="flex flex-row justify-center">
-      <CourseAccordion program={program} />
+      <CourseAccordion program={program} userCourses={userCourses} />
     </div>
   );
 }

@@ -45,3 +45,15 @@ export type CourseWithTeachingProfessor = Prisma.CourseGetPayload<{
     taughtBy: true;
   };
 }>;
+
+export type UserCourses = Prisma.UserGetPayload<{
+  select: {
+    enrolledCourses: {
+      select: {
+        course: true;
+        current: true;
+      };
+    };
+    taughtCourses: true;
+  };
+}>;
