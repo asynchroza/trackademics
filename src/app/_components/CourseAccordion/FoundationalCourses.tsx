@@ -7,7 +7,7 @@ import { CourseTable } from "./CourseTable";
 import type { FetchedRulesProgram } from "~/types/extendedPrismaTypes";
 import { checkCourseStatus } from "./utils";
 import type { EnrolledCourse } from "./types";
-import { useCallback } from "react";
+import { useCountCredits } from "./useCountCredits";
 
 export const FoundationalCourses = ({
   program,
@@ -16,18 +16,10 @@ export const FoundationalCourses = ({
   program: FetchedRulesProgram;
   enrolledCourses?: EnrolledCourse[];
 }) => {
-  const countCredits = useCallback(() => {
-    const filteredCourses = program.foundationalCourses.courses.filter(
-      (course) => checkCourseStatus(course.codeName, enrolledCourses),
-    );
-    let totalCredits = 0;
-
-    filteredCourses.forEach((course) => {
-      totalCredits += course.credits;
-    });
-
-    return totalCredits;
-  }, [program, enrolledCourses]);
+  const countCredits = useCountCredits(
+    program.foundationalCourses.courses,
+    enrolledCourses,
+  );
 
   return (
     <AccordionItem value="foundational">
