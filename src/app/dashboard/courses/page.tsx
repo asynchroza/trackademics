@@ -11,6 +11,7 @@ import {
 } from "~/app/_components/Course/CourseBox";
 import { NAVIGATION_PATHS } from "~/app/_constants/navigation";
 import { api } from "~/trpc/react";
+import { CourseWithTeachingProfessor } from "~/types/extendedPrismaTypes";
 
 const getCorrectPageNumber = (queryParam: string | null) => {
   return Number(queryParam) > 0 ? Number(queryParam) : 1;
@@ -98,7 +99,7 @@ function RenderCourses({
   courses,
 }: {
   loading: boolean;
-  courses?: Course[];
+  courses?: CourseWithTeachingProfessor[];
 }) {
   return (
     <div className="grid h-[60vh] grid-cols-3">

@@ -35,6 +35,9 @@ export const courseRouter = createTRPCRouter({
             },
           ],
         },
+        include: {
+          taughtBy: true,
+        },
         skip,
         take: pageSize,
       });

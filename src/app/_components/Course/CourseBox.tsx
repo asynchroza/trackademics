@@ -6,9 +6,13 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { type Course } from "@prisma/client";
+import type { CourseWithTeachingProfessor } from "~/types/extendedPrismaTypes";
 
-export const CourseBox = ({ course }: { course: Course }) => {
+export const CourseBox = ({
+  course,
+}: {
+  course: CourseWithTeachingProfessor;
+}) => {
   return (
     <Card className="m-2 h-[17.5vh] w-[22.5vw]">
       <CardHeader>
@@ -17,7 +21,9 @@ export const CourseBox = ({ course }: { course: Course }) => {
         </CardTitle>
         <CardDescription>{course.description}</CardDescription>
       </CardHeader>
-      <CardContent></CardContent>
+      <CardContent>
+        <p>Taught by: {course.taughtBy.name}</p>
+      </CardContent>
     </Card>
   );
 };

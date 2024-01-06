@@ -39,3 +39,9 @@ export interface FetchedRulesProgram extends ExtendedProgram {
     }
   >;
 }
+
+export type CourseWithTeachingProfessor = Prisma.CourseGetPayload<{
+  include: {
+    taughtBy: true;
+  };
+}>;
