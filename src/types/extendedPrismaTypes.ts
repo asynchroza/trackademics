@@ -57,3 +57,33 @@ export type UserCourses = Prisma.UserGetPayload<{
     taughtCourses: true;
   };
 }>;
+
+export type RequiredElectiveGroup = Prisma.ElectiveGroupGetPayload<{
+  select: {
+    required: true;
+    name: true;
+    requiredCredits: true;
+    requiredCourses: {
+      select: {
+        codeName: true;
+        course: true;
+      };
+    };
+  };
+}>;
+
+export type OptionalElectiveGroup = Prisma.ElectiveGroupGetPayload<{
+  select: {
+    required: true;
+    name: true;
+    requiredCredits: true;
+    electiveCourses: {
+      select: {
+        codeName: true;
+        course: true;
+      };
+    };
+  };
+}> & { ruledOutElectiveCourses: Course[] | undefined };
+
+export type FullElectiveGroup = RequiredElectiveGroup & OptionalElectiveGroup;
