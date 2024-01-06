@@ -32,7 +32,7 @@ export default async function DashboardLayout({
   return (
     <div>
       <Navigation />
-      <div className="flex h-[91.5vh] flex-col items-center justify-center bg-slate-200 text-black">
+      <div className="flex h-max min-h-screen flex-col items-center justify-center bg-slate-200 text-black">
         {children}
       </div>
     </div>
