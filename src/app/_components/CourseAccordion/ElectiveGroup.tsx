@@ -8,6 +8,7 @@ import { OptionalElectiveGroup } from "./OptionalElectiveGroup";
 import type { FullElectiveGroup } from "~/types/extendedPrismaTypes";
 import type { EnrolledCourse } from "./types";
 import { useCountCredits } from "./useCountCredits";
+import { RequiredCreditsHeader } from "./RequiredCreditsHeader";
 
 export const ElectiveGroup = ({
   electiveGroup,
@@ -31,13 +32,11 @@ export const ElectiveGroup = ({
     <AccordionItem value={electiveGroup.name} key={electiveGroup.name}>
       <AccordionTrigger>{electiveGroup.name}</AccordionTrigger>
       <AccordionContent>
-        <p className="text-sm text-slate-600">
-          {electiveGroup.required ? "Required" : "Allowed"} total credits from
-          this elective group: {electiveGroup.requiredCredits}
-        </p>
-        <p className="p-2 text-end text-sm text-slate-600">
-          Current credits: {countCredits()}
-        </p>
+        <RequiredCreditsHeader
+          required={electiveGroup.required}
+          requiredCredits={electiveGroup.requiredCredits}
+          currentCredits={countCredits()}
+        />
       </AccordionContent>
 
       <RequiredElectiveGroup
