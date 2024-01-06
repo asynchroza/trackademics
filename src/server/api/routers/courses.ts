@@ -22,6 +22,12 @@ export const courseRouter = createTRPCRouter({
               name: { contains: filter, mode: PRISMA_FILTER_MODES.INSENSITIVE },
             },
             { id: { contains: filter, mode: PRISMA_FILTER_MODES.INSENSITIVE } },
+            {
+              codeName: {
+                contains: filter,
+                mode: PRISMA_FILTER_MODES.INSENSITIVE,
+              },
+            },
           ],
           AND: [
             {

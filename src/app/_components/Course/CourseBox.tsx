@@ -1,12 +1,24 @@
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { type Course } from "@prisma/client";
 
 export const CourseBox = ({ course }: { course: Course }) => {
   return (
-    <div className="m-2 h-[17.5vh] w-[22.5vw] bg-white text-center">
-      <h2>{course.name}</h2>
-      <p>{course.description}</p>
-    </div>
+    <Card className="m-2 h-[17.5vh] w-[22.5vw]">
+      <CardHeader>
+        <CardTitle>
+          {course.codeName}: {course.name}
+        </CardTitle>
+        <CardDescription>{course.description}</CardDescription>
+      </CardHeader>
+      <CardContent></CardContent>
+    </Card>
   );
 };
 
