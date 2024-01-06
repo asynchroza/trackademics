@@ -5,7 +5,7 @@ import type {
   UserCourses,
 } from "~/types/extendedPrismaTypes";
 import { FoundationalCourses } from "./FoundationalCourses";
-import { ElectiveCourses } from "./ElectiveCourses";
+import { ElectiveGroups } from "./ElectiveGroups";
 import { Accordion } from "@/components/ui/accordion";
 
 export const CourseAccordion = ({
@@ -26,7 +26,7 @@ export const CourseAccordion = ({
         program={program}
         enrolledCourses={enrolledCourses}
       />
-      <ElectiveCourses program={program} enrolledCourses={enrolledCourses} />
+      <ElectiveGroups program={program} enrolledCourses={enrolledCourses} />
     </Accordion>
   );
 };
