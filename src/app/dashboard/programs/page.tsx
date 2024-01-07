@@ -1,4 +1,5 @@
 import { CourseAccordion } from "~/app/_components/CourseAccordion/CourseAccordion";
+import { ProgramMenu } from "~/app/_components/ProgramMenu/ProgramMenu";
 import { api } from "~/trpc/server";
 
 export default function Programs() {
@@ -13,8 +14,11 @@ async function RenderProgram() {
   const userCourses = await api.course.getUserCourses.query();
 
   return (
-    <div className="flex flex-row justify-center">
-      <CourseAccordion program={program} userCourses={userCourses} />
-    </div>
+    <>
+      <ProgramMenu className="absolute start-0" />
+      <div className="flex flex-row justify-center">
+        <CourseAccordion program={program} userCourses={userCourses} />
+      </div>
+    </>
   );
 }
