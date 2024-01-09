@@ -1,4 +1,4 @@
-import type { PageProps } from ".next/types/app/page";
+import type { PageProps } from ".next/types/app/layout";
 import { Fragment } from "react";
 import { CourseAccordion } from "~/app/_components/CourseAccordion/CourseAccordion";
 import { ProgramMenu } from "~/app/_components/ProgramMenu/ProgramMenu";
