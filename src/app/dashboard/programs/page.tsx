@@ -20,6 +20,7 @@ export default async function RenderProgram(props: SearchPageProps) {
     <Fragment>
       <ProgramMenu
         className="absolute start-0 min-h-[91.5vh]"
+        selectedProgramName={props.searchParams.program ?? ""}
         programNames={programNames}
       />
       <div className="flex flex-row justify-center">
