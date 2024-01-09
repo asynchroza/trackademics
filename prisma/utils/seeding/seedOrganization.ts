@@ -25,6 +25,27 @@ export const seedOrganization = async (
       },
     });
 
+    const superAdmin = await prisma.user.upsert({
+      where: {
+        username: "superadmin",
+      },
+      update: {},
+      create: {
+        organization: {
+          connect: {
+            id: organization.id,
+          },
+        },
+        name: "Super Admin",
+        email: "admin@admin.com",
+        password: "admin1234",
+        username: "superadmin",
+        role: "Admin",
+      },
+    });
+
+    console.log({ superAdmin });
+
     // SEED PROFESSORS
     const professorPromises: Promise<User>[] = [];
     org.professors.forEach((prof) => {
