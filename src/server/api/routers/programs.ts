@@ -3,6 +3,18 @@ import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import type { FetchedRulesProgram } from "~/types/extendedPrismaTypes";
 
 export const programRouter = createTRPCRouter({
+  getProgramNames: protectedProcedure.query(async ({ ctx }) => {
+    const result = await ctx.db.program.findMany({
+      where: {
+        organizationId: ctx.session.user.organizationId,
+      },
+      select: {
+        name: true,
+      },
+    });
+
+    return result.map((program) => program.name);
+  }),
   getProgram: protectedProcedure
     .input(
       z.object({

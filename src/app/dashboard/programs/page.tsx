@@ -1,24 +1,31 @@
+import type { PageProps } from ".next/types/app/page";
 import { Fragment } from "react";
 import { CourseAccordion } from "~/app/_components/CourseAccordion/CourseAccordion";
 import { ProgramMenu } from "~/app/_components/ProgramMenu/ProgramMenu";
 import { api } from "~/trpc/server";
 
-export default function Programs() {
-  return <RenderProgram />;
+interface SearchPageProps extends PageProps {
+  searchParams: Pick<PageProps, "searchParams"> & { program?: string };
 }
 
-async function RenderProgram() {
+export default async function RenderProgram(props: SearchPageProps) {
+  const programNames = await api.program.getProgramNames.query();
   const program = await api.program.getProgram.query({
-    name: "Business Administration",
+    name: props.searchParams.program ?? "",
   });
 
   const userCourses = await api.course.getUserCourses.query();
 
   return (
     <Fragment>
-      <ProgramMenu className="absolute start-0 min-h-[91.5vh]" />
+      <ProgramMenu
+        className="absolute start-0 min-h-[91.5vh]"
+        programNames={programNames}
+      />
       <div className="flex flex-row justify-center">
-        <CourseAccordion program={program} userCourses={userCourses} />
+        {program ? (
+          <CourseAccordion program={program} userCourses={userCourses} />
+        ) : null}
       </div>
     </Fragment>
   );
